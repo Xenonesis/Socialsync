@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { FlipWords } from '@/components/ui/flip-words';
 
 const Landing = () => {
   const [email, setEmail] = useState('');
@@ -57,19 +58,19 @@ const Landing = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-foreground"
+                className="inline-flex items-center space-x-2 bg-white/80 dark:bg-card backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-foreground"
               >
                 <div className="w-2 h-2 rounded-full bg-accent"></div>
                 <span>Your social media growth partner</span>
               </motion.div>
 
               <motion.h1
-                className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Sync Your Business with the{' '}
+                Transform Your Business with{' '}
                 <motion.span
                   className="relative inline-block"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -77,12 +78,13 @@ const Landing = () => {
                   transition={{ duration: 0.6, delay: 0.8 }}
                 >
                   <span 
-                    className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent font-extrabold"
+                    className="bg-gradient-to-r from-accent via-primary to-orange-500 bg-clip-text text-transparent font-extrabold animate-gradient-shift"
+                    style={{ backgroundSize: '200% 200%' }}
                   >
-                    Social Era
+                    Digital Excellence
                   </span>
                   <motion.div
-                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent"
+                    className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-accent animate-pulse-glow"
                     animate={{ 
                       scale: [1, 1.2, 1],
                       rotate: [0, 180, 360]
@@ -96,23 +98,46 @@ const Landing = () => {
                 </motion.span>
               </motion.h1>
               
-              <motion.p
-                className="text-xl text-muted-foreground max-w-xl leading-relaxed dark:text-muted-foreground"
+                            <motion.p
+                className="text-base sm:text-lg md:text-xl text-gray-900 dark:text-white max-w-xl leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
               >
-                We manage. You grow. Let us handle your digital presence while you focus on what matters most - growing your business.
+                Professional web development and social media management solutions that deliver
+                <FlipWords words={[' exceptional results', ' stunning websites', ' powerful branding', ' digital growth']} className="text-accent font-semibold" />
+                at affordable prices.
               </motion.p>
 
-              <div className="mt-12 flex flex-col sm:flex-row items-center gap-6">
-                <Button asChild size="lg" className="px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <Link to="/explore">Explore Projects</Link>
-                </Button>
-                <Link to="/build" className="text-lg font-semibold text-foreground hover:text-primary transition-colors duration-300 dark:text-link">
-                  Build your path &rarr;
-                </Link>
-              </div>
+              <motion.div 
+                className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button asChild size="lg" className="px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover-lift">
+                    <Link to="/businesses">View Our Work</Link>
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Link to="/team" className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2">
+                    Get Started Today
+                    <motion.span
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      →
+                    </motion.span>
+                  </Link>
+                </motion.div>
+              </motion.div>
             </motion.div>
 
             {/* Right Content - Floating Card */}
@@ -197,23 +222,33 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-feature">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16 mobile-padding"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <motion.h2 
+              className="responsive-heading font-bold text-foreground mb-4 sm:mb-6"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               Our Core Services
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive solutions designed to elevate your brand's social media presence
-            </p>
+            </motion.h2>
+            <motion.p 
+              className="responsive-text text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Comprehensive digital solutions designed to transform your business presence and drive measurable growth
+            </motion.p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mobile-padding">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -222,26 +257,26 @@ const Landing = () => {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 whileHover={{ y: -10 }}
               >
-                <Card className={`h-full border-0 shadow-soft hover:shadow-feature transition-all duration-300 ${
+                <Card className={`h-full border-0 shadow-soft hover:shadow-feature transition-all duration-500 hover-lift group ${
                   feature.highlighted 
-                    ? 'bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 border-2' 
-                    : 'bg-card-gradient'
+                    ? 'bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 border-2 animate-pulse-glow' 
+                    : 'bg-card-gradient hover:bg-gradient-to-br hover:from-background hover:to-muted/50'
                 }`}>
                   <CardHeader className="text-center">
                     <motion.div 
-                      className="text-5xl mb-4"
+                      className="text-4xl sm:text-5xl mb-4 group-hover:animate-bounce-in"
                       whileHover={{ scale: 1.2, rotate: 10 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       {feature.icon}
                     </motion.div>
-                    <CardTitle className={`text-2xl ${
+                    <CardTitle className={`text-lg sm:text-xl lg:text-2xl group-hover:scale-105 transition-transform duration-300 ${
                       feature.highlighted ? 'text-primary' : 'text-foreground'
                     }`}>
                       {feature.title}
                       {feature.highlighted && (
                         <motion.span
-                          className="ml-2 text-sm bg-primary text-primary-foreground px-2 py-1 rounded-full"
+                          className="ml-2 text-xs sm:text-sm bg-primary text-primary-foreground px-2 py-1 rounded-full animate-wiggle"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.5 }}
@@ -252,7 +287,7 @@ const Landing = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-center text-muted-foreground text-base leading-relaxed">
+                    <CardDescription className="text-center text-muted-foreground text-sm sm:text-base leading-relaxed group-hover:text-foreground transition-colors duration-300">
                       {feature.description}
                     </CardDescription>
                   </CardContent>
@@ -264,34 +299,57 @@ const Landing = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-4">
+      <section className="py-16 sm:py-20 bg-muted">
+        <div className="container mx-auto mobile-padding">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-2xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <motion.h2 
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               Stay Connected
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Get the latest insights, tips, and updates on social media trends and strategies
-            </p>
+            </motion.h2>
+            <motion.p 
+              className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Get the latest insights, tips, and updates on digital trends and strategies
+            </motion.p>
             
-            <form onSubmit={handleNewsletterSignup} className="flex flex-col sm:flex-row gap-4">
-              <Input
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
-                required
-              />
-              <Button type="submit" size="lg" className="px-8">
-                Subscribe
-              </Button>
-            </form>
+            <motion.form 
+              onSubmit={handleNewsletterSignup} 
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <motion.div className="flex-1" whileFocus={{ scale: 1.02 }}>
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full h-12 sm:h-14 text-base transition-all duration-300 focus:shadow-lg"
+                  required
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button type="submit" size="lg" className="px-6 sm:px-8 h-12 sm:h-14 text-base hover-lift">
+                  Subscribe
+                </Button>
+              </motion.div>
+            </motion.form>
           </motion.div>
         </div>
       </section>

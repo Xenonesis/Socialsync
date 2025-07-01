@@ -30,12 +30,11 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-3">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="w-10 h-10 rounded-xl flex items-center justify-center relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, hsl(15 85% 55%) 0%, hsl(25 90% 60%) 100%)' }}
+                className="w-10 h-10 rounded-xl overflow-hidden"
               >
-                <span className="text-white font-bold text-lg">SS</span>
+                <img src="/logo.jpg" alt="Social Sync" className="w-full h-full object-cover" />
               </motion.div>
-              <span className="text-2xl font-bold text-foreground">Social Sync</span>
+              <span className="text-xl sm:text-2xl font-bold text-foreground">Social Sync</span>
             </Link>
 
             <div className="hidden md:flex items-center space-x-10">
@@ -107,12 +106,11 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-3">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="w-8 h-8 rounded-xl flex items-center justify-center relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, hsl(15 85% 55%) 0%, hsl(25 90% 60%) 100%)' }}
+                className="w-8 h-8 rounded-xl overflow-hidden"
               >
-                <span className="text-white font-bold text-sm">SS</span>
+                <img src="/logo.jpg" alt="Social Sync" className="w-full h-full object-cover" />
               </motion.div>
-              <span className="text-xl font-bold text-foreground">Social Sync</span>
+              <span className="text-lg sm:text-xl font-bold text-foreground">Social Sync</span>
             </Link>
             <ThemeToggle />
           </div>
