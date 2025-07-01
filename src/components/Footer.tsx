@@ -1,13 +1,12 @@
 import React from 'react';
 import { Github, Twitter, Linkedin, Instagram, MessageCircle } from 'lucide-react';
-import { Footer as UIFooter } from '@/components/ui/footer';
 
 const FooterWrapper = () => {
 
   const socialLinks = [
     {
       icon: <Instagram className="h-5 w-5" />,
-      href: "https://www.instagram.com/social._.sync?igsh=MWs3N2c0ZGdmOHozaA%3D%3D&utm_source=qr",
+      href: "https://www.instagram.com/Social Sync",
       label: "Instagram",
     },
     {
@@ -17,12 +16,12 @@ const FooterWrapper = () => {
     },
     {
       icon: <Twitter className="h-5 w-5" />,
-      href: "https://twitter.com/socialsync",
+      href: "https://twitter.com/Social Sync",
       label: "Twitter",
     },
     {
       icon: <Linkedin className="h-5 w-5" />,
-      href: "https://linkedin.com/company/socialsync",
+      href: "https://linkedin.com/company/Social Sync",
       label: "LinkedIn",
     },
   ];
@@ -36,9 +35,9 @@ const FooterWrapper = () => {
   ];
 
   const legalLinks = [
-    { href: "#", label: "Privacy Policy" },
-    { href: "#", label: "Terms of Service" },
-    { href: "#", label: "Cookie Policy" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/terms-of-service", label: "Terms of Service" },
+    { href: "/cookie-policy", label: "Cookie Policy" },
   ];
 
   const logo = (
@@ -51,18 +50,70 @@ const FooterWrapper = () => {
   );
 
   return (
-    <footer className="bg-muted/50">
-      <UIFooter
-        logo={logo}
-        brandName="Social Sync"
-        socialLinks={socialLinks}
-        mainLinks={mainLinks}
-        legalLinks={legalLinks}
-        copyright={{
-          text: "© 2025 Social Sync",
-          license: "All rights reserved",
-        }}
-      />
+    <footer className="bg-muted/50 py-12">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              {logo}
+              <span className="text-xl font-bold text-foreground">Social Sync</span>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Professional web development and social media management services.
+            </p>
+          </div>
+          
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              {mainLinks.map((link, index) => (
+                <li key={index}>
+                  <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Legal</h3>
+            <ul className="space-y-2">
+              {legalLinks.map((link, index) => (
+                <li key={index}>
+                  <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={link.label}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t border-border mt-8 pt-8 text-center">
+          <p className="text-muted-foreground text-sm">
+            © 2025 Social Sync. All rights reserved.
+          </p>
+        </div>
+      </div>
     </footer>
   );
 };

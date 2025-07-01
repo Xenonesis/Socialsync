@@ -1,4 +1,4 @@
-# Nexus Digital Solutions
+# Social Sync
 
 🚀 **Professional Web Development & Social Media Management Services**
 
@@ -37,7 +37,7 @@ A modern, responsive website built with React, TypeScript, and Tailwind CSS, fea
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd nexus-digital-solutions
+cd social-sync
 
 # Install dependencies
 npm install
@@ -140,4 +140,4 @@ This project is proprietary and confidential. All rights reserved.
 
 ---
 
-**Built with ❤️ by Nexus Digital Solutions**
+**Built with ❤️ by Social Sync**

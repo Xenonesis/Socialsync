@@ -70,7 +70,7 @@ const Businesses = () => {
     {
       name: "Sarah Johnson",
       company: "TechStart Inc.",
-      text: "Nexus Digital delivered an exceptional e-commerce platform that increased our online sales by 250%. The user experience is outstanding!",
+      text: "Social Sync delivered an exceptional e-commerce platform that increased our online sales by 250%. The user experience is outstanding!",
       rating: 5,
     },
     {
@@ -82,7 +82,7 @@ const Businesses = () => {
     {
       name: "Emily Rodriguez",
       company: "Creative Studio",
-      text: "Professional, responsive, and results-driven. Nexus Digital created a stunning portfolio website that perfectly showcases our work.",
+      text: "Professional, responsive, and results-driven. Social Sync created a stunning portfolio website that perfectly showcases our work.",
       rating: 5,
     },
   ];
@@ -164,15 +164,17 @@ const Businesses = () => {
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
                     Web Development Projects
                   </h2>
-                  <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
-                    We create
-                    <FlipWords 
-                      words={[" modern", " responsive", " fast", " scalable"]} 
-                      className="text-primary font-semibold" 
-                      duration={2000}
-                    />
-                    web development projects at affordable cost
-                  </p>
+                  <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
+                    <span>We create</span>
+                    <span className="inline-block">
+                      <FlipWords 
+                        words={["modern", "responsive", "fast", "scalable"]} 
+                        className="text-primary font-semibold mx-1 inline-block" 
+                        duration={2000}
+                      />
+                    </span>
+                    <span>web development projects at affordable cost</span>
+                  </div>
                 </motion.div>
 
                 {/* Filter Dropdown */}
@@ -317,15 +319,17 @@ const Businesses = () => {
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
                     Social Media Management
                   </h2>
-                  <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
-                    We manage all social media accounts with
-                    <FlipWords 
-                      words={[" engaging", " strategic", " effective", " professional"]} 
-                      className="text-primary font-semibold" 
-                      duration={2200}
-                    />
-                    strategies at affordable cost
-                  </p>
+                  <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
+                    <span>We manage all social media accounts with</span>
+                    <span className="inline-block">
+                      <FlipWords 
+                        words={["engaging", "strategic", "effective", "professional"]} 
+                        className="text-primary font-semibold mx-1 inline-block" 
+                        duration={2200}
+                      />
+                    </span>
+                    <span>strategies at affordable cost</span>
+                  </div>
                 </motion.div>
                 
                 {/* Social Media CardSpotlight Services */}
@@ -452,7 +456,7 @@ const Businesses = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Let's discuss how Nexus Digital can bring your web development vision to life
+              Let's discuss how Social Sync can bring your web development vision to life
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

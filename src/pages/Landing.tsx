@@ -98,16 +98,21 @@ const Landing = () => {
                 </motion.span>
               </motion.h1>
               
-                            <motion.p
+                            <motion.div 
                 className="text-base sm:text-lg md:text-xl text-gray-900 dark:text-white max-w-xl leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Professional web development and social media management solutions that deliver
-                <FlipWords words={[' exceptional results', ' stunning websites', ' powerful branding', ' digital growth']} className="text-accent font-semibold" />
-                at affordable prices.
-              </motion.p>
+                <span>Professional web development and social media management solutions that deliver</span>
+                <span className="inline-block">
+                  <FlipWords 
+                    words={['exceptional results', 'stunning websites', 'powerful branding', 'digital growth']} 
+                    className="text-accent font-semibold mx-1 inline-block" 
+                  />
+                </span>
+                <span>at affordable prices.</span>
+              </motion.div>
 
               <motion.div 
                 className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
