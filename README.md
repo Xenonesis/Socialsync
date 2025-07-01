@@ -1,73 +1,73 @@
-# Welcome to your Lovable project
+# Socialsync
 
-## Project info
+Welcome to Socialsync, a web application designed to synchronize and manage social media content effortlessly.
 
-**URL**: https://lovable.dev/projects/d41aad83-3259-400d-8907-e674751a8167
+## Project Overview
 
-## How can I edit this code?
+**Website**: [Socialsync](https://socialsync.example.com) (Replace with actual website URL if available)
 
-There are several ways of editing your application.
+**GitHub Repository**: [Xenonesis/Socialsync](https://github.com/Xenonesis/Socialsync)
 
-**Use Lovable**
+**Version**: 0.10
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d41aad83-3259-400d-8907-e674751a8167) and start prompting.
+## Description
 
-Changes made via Lovable will be committed automatically to this repo.
+Socialsync is a modern web application built to help users manage their social media presence by syncing content across multiple platforms. Whether you're a business, a team, or an individual, Socialsync streamlines the process of posting and tracking engagement.
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js and npm installed on your machine. You can install them using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
-Follow these steps:
+### Installation
+
+Follow these steps to set up the project locally:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Step 1: Clone the repository
+git clone https://github.com/Xenonesis/Socialsync.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Step 2: Navigate to the project directory
+cd Socialsync
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Usage
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Once the development server is running, you can access the application at `localhost:5173` (or the port specified in your configuration). Use the interface to connect your social media accounts and start syncing content.
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Vite**: For fast development and build times.
+- **TypeScript**: For type-safe JavaScript.
+- **React**: For building user interfaces.
+- **shadcn-ui**: For UI components.
+- **Tailwind CSS**: For styling.
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/d41aad83-3259-400d-8907-e674751a8167) and click on Share -> Publish.
+To deploy Socialsync, you can use platforms like Vercel, Netlify, or any other hosting service that supports Vite-based React applications. Follow the hosting provider's instructions for deployment.
 
-## Can I connect a custom domain to my Lovable project?
+## Contributing
 
-Yes, you can!
+We welcome contributions to Socialsync! If you'd like to contribute, please fork the repository, make your changes, and submit a pull request. Ensure your code adheres to the project's coding standards.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any inquiries or support, please open an issue on the GitHub repository or contact the maintainers directly.
+
+---
+
+*Last updated for version 0.10*
