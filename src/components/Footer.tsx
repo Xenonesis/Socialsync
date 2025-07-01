@@ -1,9 +1,20 @@
 import React from 'react';
-import { Github, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Github, Twitter, Linkedin, Instagram, MessageCircle } from 'lucide-react';
 import { Footer as UIFooter } from '@/components/ui/footer';
 
 const FooterWrapper = () => {
+
   const socialLinks = [
+    {
+      icon: <Instagram className="h-5 w-5" />,
+      href: "https://www.instagram.com/social._.sync?igsh=MWs3N2c0ZGdmOHozaA%3D%3D&utm_source=qr",
+      label: "Instagram",
+    },
+    {
+      icon: <MessageCircle className="h-5 w-5" />,
+      href: "https://wa.me/message/GDKO46FNFXKBC1",
+      label: "WhatsApp",
+    },
     {
       icon: <Twitter className="h-5 w-5" />,
       href: "https://twitter.com/socialsync",
@@ -14,24 +25,14 @@ const FooterWrapper = () => {
       href: "https://linkedin.com/company/socialsync",
       label: "LinkedIn",
     },
-    {
-      icon: <Instagram className="h-5 w-5" />,
-      href: "https://instagram.com/socialsync",
-      label: "Instagram",
-    },
-    {
-      icon: <Github className="h-5 w-5" />,
-      href: "https://github.com/socialsync",
-      label: "GitHub",
-    },
   ];
 
   const mainLinks = [
-    { href: "/businesses", label: "Services" },
-    { href: "/team", label: "About Us" },
+    { href: "/", label: "Home" },
+    { href: "/businesses", label: "Projects" },
+    { href: "/team", label: "Team" },
     { href: "/team", label: "Contact" },
     { href: "#", label: "Blog" },
-    { href: "#", label: "Resources" },
   ];
 
   const legalLinks = [
@@ -50,17 +51,19 @@ const FooterWrapper = () => {
   );
 
   return (
-    <UIFooter
-      logo={logo}
-      brandName="Social Sync"
-      socialLinks={socialLinks}
-      mainLinks={mainLinks}
-      legalLinks={legalLinks}
-      copyright={{
-        text: "© 2025 Social Sync",
-        license: "All rights reserved",
-      }}
-    />
+    <footer className="bg-muted/50">
+      <UIFooter
+        logo={logo}
+        brandName="Social Sync"
+        socialLinks={socialLinks}
+        mainLinks={mainLinks}
+        legalLinks={legalLinks}
+        copyright={{
+          text: "© 2025 Social Sync",
+          license: "All rights reserved",
+        }}
+      />
+    </footer>
   );
 };
 

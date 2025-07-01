@@ -1,18 +1,18 @@
-# Socialsync
+# Social Sync
 
-Welcome to Socialsync, a web application designed to synchronize and manage social media content effortlessly.
+Welcome to Social Sync, a modern, responsive business website showcasing web development services and projects.
 
 ## Project Overview
 
-**Website**: [Socialsync](https://socialsync.example.com) (Replace with actual website URL if available)
+**Website**: Social Sync - Modern Web Development Agency
 
-**GitHub Repository**: [Xenonesis/Socialsync](https://github.com/Xenonesis/Socialsync)
+**Version**: 1.0.0
 
-**Version**: 0.10
+**Tagline**: We manage. You grow.
 
 ## Description
 
-Socialsync is a modern web application built to help users manage their social media presence by syncing content across multiple platforms. Whether you're a business, a team, or an individual, Socialsync streamlines the process of posting and tracking engagement.
+Social Sync is a modern business website built to showcase web development services, projects, and team expertise. The site demonstrates modern web technologies and serves as a portfolio for development capabilities, helping businesses sync with the social era through innovative web solutions.
 
 ## Getting Started
 
@@ -40,17 +40,54 @@ npm run dev
 
 ### Usage
 
-Once the development server is running, you can access the application at `localhost:5173` (or the port specified in your configuration). Use the interface to connect your social media accounts and start syncing content.
+Once the development server is running, you can access the application at `localhost:5173` (or the port specified in your configuration). Explore the three main pages:
+
+- **Landing Page (/)**: Learn about Social Sync's mission and services
+- **Businesses Page (/businesses)**: Browse web development projects and case studies
+- **Team & Contact Page (/team)**: Meet the development team and get in touch
+
+### Navigation
+
+- **Desktop**: Clean navigation bar with logo and menu items
+- **Mobile**: Responsive tubelight navigation component
+- **AI Assistant**: Floating button for instant help and inquiries
 
 ## Technologies Used
 
 This project is built with:
 
-- **Vite**: For fast development and build times.
-- **TypeScript**: For type-safe JavaScript.
-- **React**: For building user interfaces.
-- **shadcn-ui**: For UI components.
-- **Tailwind CSS**: For styling.
+- **Vite**: Fast development and build framework
+- **React**: Modern UI library with TypeScript
+- **ShadCN UI**: Beautiful, accessible component library
+- **Framer Motion**: Smooth animations and page transitions
+- **Tailwind CSS**: Utility-first CSS framework
+- **React Router**: Client-side routing
+
+## Features
+
+### 🏠 Landing Page
+- Hero section with "Sync Your Business with the Social Era" title
+- Services grid highlighting Social Media Strategy, Web Development Projects, and Analytics & Branding
+- Newsletter signup with ShadCN Input & Button components
+- Smooth entrance animations using Framer Motion
+
+### 🏢 Businesses Page
+- Grid of web development projects with tech stack filters
+- Project showcase with images, descriptions, and "Learn More" buttons
+- Client testimonials with fade-in animations
+- Filter dropdown for different project categories
+
+### 👥 Team & Contact Page
+- Team grid with Avatar components showing developer profiles
+- Contact form with Name, Email, and Message inputs
+- Interactive map placeholder and office information
+- Responsive design with proper spacing
+
+### 💡 AI Assistant (Bonus Feature)
+- Floating AI Agent button using Dialog component
+- Interactive chat interface for service inquiries
+- Quick question buttons for common queries
+- Contextual responses about web development services
 
 ## Deployment
 

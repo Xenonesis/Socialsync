@@ -17,13 +17,14 @@ const Landing = () => {
       icon: "📱",
     },
     {
-      title: "Brand Management",
-      description: "Consistent brand identity across all platforms with professional content creation and community management.",
-      icon: "🎨",
+      title: "Web Development Projects",
+      description: "Modern, responsive websites and web applications built with cutting-edge technologies to elevate your online presence.",
+      icon: "💻",
+      highlighted: true,
     },
     {
-      title: "Analytics & Reporting",
-      description: "Data-driven insights and detailed performance reports to optimize your social media ROI and growth.",
+      title: "Analytics & Branding",
+      description: "Data-driven insights and comprehensive branding solutions to optimize your digital strategy and growth.",
       icon: "📊",
     },
   ];
@@ -68,7 +69,7 @@ const Landing = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Sync Your Business with{' '}
+                Sync Your Business with the{' '}
                 <motion.span
                   className="relative inline-block"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -78,7 +79,7 @@ const Landing = () => {
                   <span 
                     className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent font-extrabold"
                   >
-                    AI-powered
+                    Social Era
                   </span>
                   <motion.div
                     className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent"
@@ -93,138 +94,102 @@ const Landing = () => {
                     }}
                   />
                 </motion.span>
-                {' '}social strategies
               </motion.h1>
               
               <motion.p
-                className="text-xl text-muted-foreground max-w-xl leading-relaxed"
+                className="text-xl text-muted-foreground max-w-xl leading-relaxed dark:text-muted-foreground"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                This isn't just another social media service. It's an intelligent growth platform that adapts to you, tracks your progress, and evolves with every campaign.
+                We manage. You grow. Let us handle your digital presence while you focus on what matters most - growing your business.
               </motion.p>
-              
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-              >
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button 
-                    size="lg" 
-                    className="bg-primary text-primary-foreground hover:bg-primary-hover rounded-full px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200"
-                    asChild
-                  >
-                    <Link to="/businesses" className="flex items-center space-x-2">
-                      <span>Try it now</span>
-                      <svg 
-                        width="18" 
-                        height="18" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2"
-                        className="ml-1"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
-                    </Link>
-                  </Button>
-                </motion.div>
-                
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button 
-                    variant="ghost" 
-                    size="lg"
-                    className="rounded-full px-8 py-4 text-lg font-medium hover:bg-white/20 transition-all duration-200"
-                    asChild
-                  >
-                    <Link to="/team" className="flex items-center space-x-2">
-                      <span>Build your path</span>
-                      <svg 
-                        width="18" 
-                        height="18" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2"
-                      >
-                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                      </svg>
-                    </Link>
-                  </Button>
-                </motion.div>
-              </motion.div>
+
+              <div className="mt-12 flex flex-col sm:flex-row items-center gap-6">
+                <Button asChild size="lg" className="px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <Link to="/explore">Explore Projects</Link>
+                </Button>
+                <Link to="/build" className="text-lg font-semibold text-foreground hover:text-primary transition-colors duration-300 dark:text-link">
+                  Build your path &rarr;
+                </Link>
+              </div>
             </motion.div>
 
-            {/* Right Visual */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+            {/* Right Content - Floating Card */}
+            <motion.div 
               className="relative"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-foreground">Social growth score</h3>
-                    <span className="text-sm text-muted-foreground">Analytics & Strategy</span>
-                  </div>
-                  
-                  <div className="text-6xl font-bold text-foreground">92%</div>
-                  
-                  <div className="grid grid-cols-4 gap-4">
-                    {[
-                      { label: 'Engagement', value: 66, color: 'bg-blue-400' },
-                      { label: 'Reach', value: 87, color: 'bg-green-400' },
-                      { label: 'Growth', value: 92, color: 'bg-accent' },
-                      { label: 'Strategy', value: 72, color: 'bg-orange-400' }
-                    ].map((metric, index) => (
-                      <motion.div
-                        key={metric.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-                        className="text-center"
-                      >
-                        <div className="text-xs text-muted-foreground mb-2">{metric.label}</div>
-                        <div className="text-sm font-semibold text-foreground">{metric.value}%</div>
-                        <motion.div 
-                          className={`h-16 ${metric.color} rounded-lg mt-2`}
+              <Card className="bg-card-gradient shadow-lg border-0 w-full max-w-lg mx-auto">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold flex justify-between items-center">
+                    <span>Social Growth Score</span>
+                    <span className="text-sm font-medium text-muted-foreground">Analytics & Strategy</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-7xl font-bold text-foreground mb-4">92%</p>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-4 gap-4 text-center">
+                      <div>
+                        <p className="font-semibold text-lg">66%</p>
+                        <p className="text-sm text-muted-foreground">Engagement</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-lg">87%</p>
+                        <p className="text-sm text-muted-foreground">Reach</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-lg">92%</p>
+                        <p className="text-sm text-muted-foreground">Growth</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-lg">72%</p>
+                        <p className="text-sm text-muted-foreground">Strategy</p>
+                      </div>
+                    </div>
+                    <div className="h-20 w-full bg-muted/50 rounded-lg p-2 flex items-end gap-2">
+                      {[66, 87, 92, 72].map((val, i) => (
+                        <motion.div
+                          key={i}
+                          className="w-1/4 bg-primary rounded-t-md"
+                          style={{ height: `${val}%` }}
                           initial={{ height: 0 }}
-                          animate={{ height: metric.value * 0.6 + 20 }}
-                          transition={{ duration: 1, delay: 1 + index * 0.1 }}
+                          animate={{ height: `${val}%` }}
+                          transition={{ duration: 1, delay: 0.8 + i * 0.1, type: 'spring' }}
                         />
-                      </motion.div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                  
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Feb</span>
-                    <span>Mar</span>
-                    <span>May</span>
-                    <span>Jun</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Floating elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold shadow-lg"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                </CardContent>
+              </Card>
+
+              <motion.div 
+                className="absolute -top-4 -right-4 bg-accent text-accent-foreground text-sm font-bold px-4 py-2 rounded-full shadow-lg"
+                initial={{ scale: 0, rotate: -15 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.5, delay: 1, type: 'spring', stiffness: 200 }}
               >
                 AI
               </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 bg-white rounded-full px-4 py-2 shadow-lg"
-                animate={{ x: [0, 10, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
+
+              <motion.div 
+                className="absolute -bottom-8 right-1/2 translate-x-1/2 lg:right-0 lg:translate-x-0 lg:-bottom-12 lg:-right-12 bg-white/50 backdrop-blur-md p-4 rounded-2xl shadow-lg dark:bg-card/50"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
               >
-                <div className="text-xs font-medium text-foreground">Track</div>
+                <div className="flex items-center gap-4">
+                  <div className="text-sm">
+                    <p className="font-bold">Track</p>
+                    <p className="text-xs text-muted-foreground">Real-time analytics</p>
+                  </div>
+                  <Button variant="outline" size="icon" className="rounded-full w-12 h-12 bg-white/80 hover:bg-white dark:bg-primary dark:hover:bg-primary-hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-foreground dark:text-primary-foreground"><path d="m9 18 6-6-6-6"/></svg>
+                  </Button>
+                </div>
               </motion.div>
             </motion.div>
           </div>
@@ -257,7 +222,11 @@ const Landing = () => {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 whileHover={{ y: -10 }}
               >
-                <Card className="h-full bg-card-gradient border-0 shadow-soft hover:shadow-feature transition-all duration-300">
+                <Card className={`h-full border-0 shadow-soft hover:shadow-feature transition-all duration-300 ${
+                  feature.highlighted 
+                    ? 'bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 border-2' 
+                    : 'bg-card-gradient'
+                }`}>
                   <CardHeader className="text-center">
                     <motion.div 
                       className="text-5xl mb-4"
@@ -266,7 +235,21 @@ const Landing = () => {
                     >
                       {feature.icon}
                     </motion.div>
-                    <CardTitle className="text-2xl text-foreground">{feature.title}</CardTitle>
+                    <CardTitle className={`text-2xl ${
+                      feature.highlighted ? 'text-primary' : 'text-foreground'
+                    }`}>
+                      {feature.title}
+                      {feature.highlighted && (
+                        <motion.span
+                          className="ml-2 text-sm bg-primary text-primary-foreground px-2 py-1 rounded-full"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.5 }}
+                        >
+                          Featured
+                        </motion.span>
+                      )}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-center text-muted-foreground text-base leading-relaxed">

@@ -16,17 +16,17 @@ const AIAssistant = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I'm your Social Sync AI assistant. I can help you learn about our services or partnership opportunities. How can I help you today?",
+      text: "Hello! I'm your Social Sync AI assistant. I can help you learn about our web development services, projects, or partnership opportunities. How can I help you today?",
       isUser: false,
     },
   ]);
   const [inputValue, setInputValue] = useState('');
 
   const quickQuestions = [
-    "How do I partner with Social Sync?",
-    "Show me your services.",
-    "What makes Social Sync different?",
-    "Tell me about your team.",
+    "What web development services do you offer?",
+    "Show me your recent projects.",
+    "What technologies do you use?",
+    "How can I start a project?",
   ];
 
   const handleSendMessage = (message: string) => {
@@ -45,16 +45,18 @@ const AIAssistant = () => {
     setTimeout(() => {
       let aiResponse = "";
       
-      if (message.toLowerCase().includes("partner")) {
-        aiResponse = "Great question! We offer flexible partnership models including referral programs, white-label solutions, and strategic alliances. Contact our team at hello@socialsync.com to discuss opportunities that align with your business goals.";
-      } else if (message.toLowerCase().includes("services")) {
-        aiResponse = "We specialize in three core areas: 1) Social Media Strategy - comprehensive planning and execution, 2) Brand Management - consistent identity across platforms, and 3) Analytics & Reporting - data-driven insights for growth. Each service is customized to your business needs.";
-      } else if (message.toLowerCase().includes("different")) {
-        aiResponse = "What sets Social Sync apart is our integrated approach combining strategy, execution, and analytics. We don't just manage your social media - we sync your entire business with the social era, ensuring consistent brand experience and measurable results.";
+      if (message.toLowerCase().includes("services") || message.toLowerCase().includes("development")) {
+        aiResponse = "We offer comprehensive web development services including: 1) E-commerce platforms with payment integration, 2) SaaS dashboards with real-time analytics, 3) Corporate websites with CMS, 4) Mobile app landing pages, 5) Portfolio websites, and 6) Learning platforms. Each project is built with modern technologies like React, Next.js, and Node.js.";
+      } else if (message.toLowerCase().includes("projects") || message.toLowerCase().includes("portfolio")) {
+        aiResponse = "Our recent projects include e-commerce platforms, SaaS dashboards, corporate websites, and mobile app landing pages. Each project showcases modern design, responsive layouts, and cutting-edge technology stacks. Visit our Businesses page to explore our complete portfolio with detailed case studies.";
+      } else if (message.toLowerCase().includes("technologies") || message.toLowerCase().includes("tech")) {
+        aiResponse = "We work with modern technologies including React, Next.js, Vue.js, Node.js, Python, TypeScript, Tailwind CSS, MongoDB, PostgreSQL, and cloud platforms like AWS and Vercel. We choose the best tech stack for each project based on your specific requirements and goals.";
+      } else if (message.toLowerCase().includes("start") || message.toLowerCase().includes("project")) {
+        aiResponse = "Starting a project is easy! First, we'll discuss your requirements and goals. Then we'll propose a technical solution and timeline. Our process includes planning, design, development, testing, and deployment. Contact us through our Team & Contact page to schedule a consultation.";
       } else if (message.toLowerCase().includes("team")) {
-        aiResponse = "Our team consists of social media strategists, brand experts, data analysts, and creative professionals. Each member brings unique expertise to help your business thrive in the digital landscape. Visit our Team & Contact page to meet the people behind Social Sync.";
+        aiResponse = "Our  team includes full-stack developers, frontend specialists, backend engineers, DevOps experts, mobile developers, and QA engineers. Each member brings unique technical expertise to deliver exceptional web solutions. Visit our Team & Contact page to meet our talented developers.";
       } else {
-        aiResponse = "Thanks for your question! I'd be happy to connect you with our team for more detailed information. You can reach us at hello@socialsync.com or through our contact form on the Team & Contact page.";
+        aiResponse = "Thanks for your question! I'd be happy to connect you with our  team for more detailed information. You can reach us at hello@socialsync.com or through our contact form on the Team & Contact page to discuss your web development needs.";
       }
 
       const aiMessage: Message = {

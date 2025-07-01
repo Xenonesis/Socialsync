@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
 
 const Team = () => {
@@ -18,45 +19,45 @@ const Team = () => {
   const teamMembers = [
     {
       name: "Alex Rivera",
-      role: "CEO & Social Strategy Director",
-      bio: "10+ years in digital marketing with expertise in brand development and social media strategy. Led campaigns for Fortune 500 companies.",
-      image: "👨‍💼",
-      expertise: ["Strategy Development", "Brand Management", "Team Leadership"],
+      role: "CEO & Lead Developer",
+      bio: "Full-stack developer with 10+ years of experience building scalable web applications. Expert in React, Node.js, and cloud architecture.",
+      avatar: "AR",
+      expertise: ["Full-Stack Development", "System Architecture", "Team Leadership"],
     },
     {
       name: "Sarah Chen",
-      role: "Creative Director",
-      bio: "Award-winning designer with a passion for visual storytelling. Specializes in creating compelling content that drives engagement.",
-      image: "👩‍🎨",
-      expertise: ["Visual Design", "Content Creation", "Brand Identity"],
+      role: "Frontend Developer",
+      bio: "UI/UX specialist with a passion for creating beautiful, responsive interfaces. Expert in React, TypeScript, and modern CSS frameworks.",
+      avatar: "SC",
+      expertise: ["React Development", "UI/UX Design", "Responsive Design"],
     },
     {
       name: "Marcus Johnson",
-      role: "Analytics Manager",
-      bio: "Data scientist turned social media analyst. Expert in translating complex metrics into actionable insights for business growth.",
-      image: "👨‍💻",
-      expertise: ["Data Analysis", "Performance Tracking", "ROI Optimization"],
+      role: "Backend Developer",
+      bio: "Backend specialist focused on building robust APIs and database systems. Expert in Node.js, Python, and cloud infrastructure.",
+      avatar: "MJ",
+      expertise: ["API Development", "Database Design", "Cloud Infrastructure"],
     },
     {
       name: "Emma Thompson",
-      role: "Community Manager",
-      bio: "Community building specialist with experience managing online communities for tech startups and established brands.",
-      image: "👩‍💼",
-      expertise: ["Community Engagement", "Customer Relations", "Crisis Management"],
+      role: "DevOps Engineer",
+      bio: "DevOps specialist ensuring smooth deployment and monitoring of applications. Expert in CI/CD, Docker, and cloud platforms.",
+      avatar: "ET",
+      expertise: ["CI/CD Pipelines", "Container Orchestration", "Monitoring"],
     },
     {
       name: "David Park",
-      role: "Paid Media Specialist",
-      bio: "Performance marketing expert with proven track record in managing multi-million dollar ad campaigns across all major platforms.",
-      image: "👨‍📊",
-      expertise: ["Paid Advertising", "Campaign Optimization", "Budget Management"],
+      role: "Mobile Developer",
+      bio: "Mobile app developer with expertise in React Native and Flutter. Focused on creating seamless cross-platform experiences.",
+      avatar: "DP",
+      expertise: ["React Native", "Flutter", "Mobile UI/UX"],
     },
     {
       name: "Lisa Rodriguez",
-      role: "Content Strategist",
-      bio: "Former journalist and content creator with expertise in developing compelling narratives that resonate with target audiences.",
-      image: "👩‍📝",
-      expertise: ["Content Strategy", "Copywriting", "Editorial Planning"],
+      role: "QA Engineer",
+      bio: "Quality assurance specialist ensuring bug-free, high-performance applications. Expert in automated testing and performance optimization.",
+      avatar: "LR",
+      expertise: ["Automated Testing", "Performance Testing", "Quality Assurance"],
     },
   ];
 
@@ -112,7 +113,7 @@ const Team = () => {
               Meet Our Team
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
-              The passionate experts behind Social Sync's success stories
+              The talented developers and engineers behind Social Sync's innovative web solutions
             </p>
           </motion.div>
         </div>
@@ -128,11 +129,8 @@ const Team = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Expert Team
+              Our Team
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each team member brings unique expertise and passion to help your business succeed
-            </p>
           </motion.div>
 
           <motion.div
@@ -153,14 +151,18 @@ const Team = () => {
                 <Card className="h-full bg-card-gradient border-0 shadow-soft hover:shadow-feature transition-all duration-300">
                   <CardHeader className="text-center">
                     <motion.div 
-                      className="text-6xl mb-4"
+                      className="mb-4 flex justify-center"
                       whileHover={{ 
                         scale: 1.1,
-                        rotate: [0, -5, 5, -5, 0],
-                        transition: { duration: 0.5 }
+                        transition: { duration: 0.3 }
                       }}
                     >
-                      {member.image}
+                      <Avatar className="w-20 h-20">
+                        <AvatarImage src={`https://api.dicebear.com/7.x/initials/svg?seed=${member.name}`} />
+                        <AvatarFallback className="text-lg font-semibold bg-primary text-primary-foreground">
+                          {member.avatar}
+                        </AvatarFallback>
+                      </Avatar>
                     </motion.div>
                     <CardTitle className="text-xl text-foreground">
                       {member.name}
@@ -208,7 +210,7 @@ const Team = () => {
                 Get In Touch
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Ready to elevate your social media presence? Let's discuss how we can help your business grow.
+                Ready to start your next web development project? Let's discuss how we can bring your vision to life.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">

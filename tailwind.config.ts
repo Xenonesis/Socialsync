@@ -55,6 +55,7 @@ export default {
 				},
 				'feature': 'hsl(var(--feature-bg))',
 				'warm-accent': 'hsl(var(--warm-accent))',
+				link: 'hsl(var(--link-foreground))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
