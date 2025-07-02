@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import type { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
@@ -9,7 +11,7 @@ interface CookieConsentBannerProps {
   onClose: () => void;
 }
 
-export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({
+export const CookieConsentBanner: FC<CookieConsentBannerProps> = ({
   onAcceptAll,
   onRejectAll,
   onCustomize,
@@ -35,12 +37,12 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({
               By clicking "Accept All", you consent to our use of cookies.
             </p>
             <div className="mt-2 text-sm">
-              <a 
-                href="/cookie-policy" 
+              <Link 
+                to="/cookie-policy" 
                 className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 Learn more
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">

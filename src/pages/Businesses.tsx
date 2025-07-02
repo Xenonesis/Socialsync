@@ -149,9 +149,9 @@ const Businesses = () => {
             className="text-center mb-16"
           >
             <Tabs defaultValue="webdev" className="w-full">
-              <TabsList className="grid w-full max-w-lg mx-auto grid-cols-1 sm:grid-cols-2 mb-8 sm:mb-12 gap-2 sm:gap-0">
-                <TabsTrigger value="webdev" className="text-sm sm:text-base py-3">Web Development</TabsTrigger>
-                <TabsTrigger value="social" className="text-sm sm:text-base py-3">Social Media</TabsTrigger>
+              <TabsList className="grid w-full max-w-md mx-auto grid-cols-1 xs:grid-cols-2 mb-6 sm:mb-8 md:mb-12 gap-1 xs:gap-0 h-auto xs:h-10">
+                <TabsTrigger value="webdev" className="text-xs xs:text-sm sm:text-base py-2 xs:py-1.5 px-2 xs:px-3 min-h-[40px] xs:min-h-auto">Web Development</TabsTrigger>
+                <TabsTrigger value="social" className="text-xs xs:text-sm sm:text-base py-2 xs:py-1.5 px-2 xs:px-3 min-h-[40px] xs:min-h-auto">Social Media</TabsTrigger>
               </TabsList>
               
               <TabsContent value="webdev" className="space-y-12">
@@ -182,10 +182,10 @@ const Businesses = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
-                  className="flex justify-center mb-12"
+                  className="flex justify-center mb-8 sm:mb-10 lg:mb-12 px-4"
                 >
                   <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-                    <SelectTrigger className="w-48">
+                    <SelectTrigger className="w-full max-w-xs sm:w-48 h-10 sm:h-auto text-sm sm:text-base">
                       <SelectValue placeholder="Filter by category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -202,7 +202,7 @@ const Businesses = () => {
 
                 {/* CardSpotlight Services */}
                 <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-items-center mb-12 sm:mb-16"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 justify-items-center mb-8 sm:mb-12 lg:mb-16"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, staggerChildren: 0.2 }}
@@ -246,7 +246,7 @@ const Businesses = () => {
                   variants={containerVariants}
                   initial="hidden"
                   whileInView="visible"
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
                 >
                   {filteredProjects.map((project) => (
                     <motion.div
@@ -279,11 +279,11 @@ const Businesses = () => {
                           </CardDescription>
                           <div>
                             <h4 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">Tech Stack:</h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5 sm:gap-2">
                               {project.techStack.map((tech, index) => (
                                 <motion.span 
                                   key={index}
-                                  className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
+                                  className="bg-primary/10 text-primary text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
                                   whileHover={{ scale: 1.1 }}
                                   initial={{ opacity: 0, scale: 0.8 }}
                                   animate={{ opacity: 1, scale: 1 }}
@@ -334,7 +334,7 @@ const Businesses = () => {
                 
                 {/* Social Media CardSpotlight Services */}
                 <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-items-center mb-12 sm:mb-16"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 justify-items-center mb-8 sm:mb-12 lg:mb-16"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, staggerChildren: 0.2 }}
@@ -381,7 +381,7 @@ const Businesses = () => {
                   className="max-w-4xl mx-auto"
                 >
                   <Card className="bg-card-gradient border-0 shadow-soft">
-                    <CardContent className="p-12 text-center">
+                    <CardContent className="p-4 sm:p-6 md:p-8 lg:p-12 text-center">
                       <motion.div 
                         className="text-6xl mb-6"
                         whileHover={{ 
@@ -398,27 +398,27 @@ const Businesses = () => {
                       <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
                         From content creation to community management, we handle all aspects of your social media presence across all platforms at competitive rates.
                       </p>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
                         <div className="text-center">
-                          <div className="text-2xl mb-2">📊</div>
-                          <p className="text-sm text-muted-foreground">Analytics</p>
+                          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">📊</div>
+                          <p className="text-xs sm:text-sm text-muted-foreground">Analytics</p>
                         </div>
                         <div className="text-center">
-                          <div className="text-2xl mb-2">✍️</div>
-                          <p className="text-sm text-muted-foreground">Content Creation</p>
+                          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">✍️</div>
+                          <p className="text-xs sm:text-sm text-muted-foreground">Content Creation</p>
                         </div>
                         <div className="text-center">
-                          <div className="text-2xl mb-2">💬</div>
-                          <p className="text-sm text-muted-foreground">Community Management</p>
+                          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">💬</div>
+                          <p className="text-xs sm:text-sm text-muted-foreground">Community Management</p>
                         </div>
                         <div className="text-center">
-                          <div className="text-2xl mb-2">📈</div>
-                          <p className="text-sm text-muted-foreground">Growth Strategy</p>
+                          <div className="text-xl sm:text-2xl mb-1 sm:mb-2">📈</div>
+                          <p className="text-xs sm:text-sm text-muted-foreground">Growth Strategy</p>
                         </div>
                       </div>
                       <Button 
                         size="lg" 
-                        className="px-8 py-6"
+                        className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base w-full sm:w-auto"
                         onClick={() => window.open('https://wa.me/message/GDKO46FNFXKBC1', '_blank')}
                       >
                         Contact Us on WhatsApp
@@ -468,7 +468,7 @@ const Businesses = () => {
               <Button 
                 size="lg" 
                 variant="secondary" 
-                className="px-6 sm:px-8 py-4 sm:py-6 text-base hover-lift"
+                className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base w-full sm:w-auto hover-lift"
                 onClick={() => window.open('https://wa.me/message/GDKO46FNFXKBC1', '_blank')}
               >
                 Contact Us on WhatsApp
@@ -493,22 +493,24 @@ const WebDevCard = ({ title, icon, services, description }: {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       whileHover={{ y: -10 }}
+      className="w-full"
     >
-      <CardSpotlight className="h-80 sm:h-96 w-full max-w-sm mx-auto">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 relative z-20 mt-2">
+      <CardSpotlight className="h-72 xs:h-80 sm:h-96 w-full max-w-sm mx-auto">
+        <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3 relative z-20 mt-2">
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
+            className="flex-shrink-0"
           >
             {icon}
           </motion.div>
-          <p className="text-lg sm:text-xl font-bold text-foreground">
+          <p className="text-base xs:text-lg sm:text-xl font-bold text-foreground leading-tight">
             {title}
           </p>
         </div>
-        <div className="text-muted-foreground mt-4 relative z-20">
-          <p className="text-sm mb-4">{description}</p>
-          <ul className="list-none mt-4">
+        <div className="text-muted-foreground mt-3 xs:mt-4 relative z-20">
+          <p className="text-xs xs:text-sm mb-3 xs:mb-4 leading-relaxed">{description}</p>
+          <ul className="list-none mt-3 xs:mt-4 space-y-1 xs:space-y-2">
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -538,22 +540,24 @@ const SocialMediaCard = ({ title, icon, services, description }: {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       whileHover={{ y: -10 }}
+      className="w-full"
     >
-      <CardSpotlight className="h-80 sm:h-96 w-full max-w-sm mx-auto">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 relative z-20 mt-2">
+      <CardSpotlight className="h-72 xs:h-80 sm:h-96 w-full max-w-sm mx-auto">
+        <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3 relative z-20 mt-2">
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
+            className="flex-shrink-0"
           >
             {icon}
           </motion.div>
-          <p className="text-lg sm:text-xl font-bold text-foreground">
+          <p className="text-base xs:text-lg sm:text-xl font-bold text-foreground leading-tight">
             {title}
           </p>
         </div>
-        <div className="text-muted-foreground mt-4 relative z-20">
-          <p className="text-sm mb-4">{description}</p>
-          <ul className="list-none mt-4">
+        <div className="text-muted-foreground mt-3 xs:mt-4 relative z-20">
+          <p className="text-xs xs:text-sm mb-3 xs:mb-4 leading-relaxed">{description}</p>
+          <ul className="list-none mt-3 xs:mt-4 space-y-1 xs:space-y-2">
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -573,9 +577,9 @@ const SocialMediaCard = ({ title, icon, services, description }: {
 
 const ServiceStep = ({ title }: { title: string }) => {
   return (
-    <li className="flex gap-2 items-start mb-2">
-      <Check className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-      <p className="text-foreground text-sm">{title}</p>
+    <li className="flex gap-2 items-start">
+      <Check className="h-3 w-3 xs:h-4 xs:w-4 text-primary mt-0.5 xs:mt-1 flex-shrink-0" />
+      <p className="text-foreground text-xs xs:text-sm leading-relaxed">{title}</p>
     </li>
   );
 };

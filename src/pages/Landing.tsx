@@ -21,7 +21,6 @@ const Landing = () => {
       title: "Web Development Projects",
       description: "Modern, responsive websites and web applications built with cutting-edge technologies to elevate your online presence.",
       icon: "💻",
-      highlighted: true,
     },
     {
       title: "Analytics & Branding",
@@ -262,11 +261,7 @@ const Landing = () => {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 whileHover={{ y: -10 }}
               >
-                <Card className={`h-full border-0 shadow-soft hover:shadow-feature transition-all duration-500 hover-lift group ${
-                  feature.highlighted 
-                    ? 'bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 border-2 animate-pulse-glow' 
-                    : 'bg-card-gradient hover:bg-gradient-to-br hover:from-background hover:to-muted/50'
-                }`}>
+                <Card className="h-full border-0 shadow-soft hover:shadow-feature transition-all duration-500 hover-lift group bg-card-gradient hover:bg-gradient-to-br hover:from-background hover:to-muted/50">
                   <CardHeader className="text-center">
                     <motion.div 
                       className="text-4xl sm:text-5xl mb-4 group-hover:animate-bounce-in"
@@ -275,20 +270,8 @@ const Landing = () => {
                     >
                       {feature.icon}
                     </motion.div>
-                    <CardTitle className={`text-lg sm:text-xl lg:text-2xl group-hover:scale-105 transition-transform duration-300 ${
-                      feature.highlighted ? 'text-primary' : 'text-foreground'
-                    }`}>
+                    <CardTitle className="text-lg sm:text-xl lg:text-2xl group-hover:scale-105 transition-transform duration-300 text-foreground">
                       {feature.title}
-                      {feature.highlighted && (
-                        <motion.span
-                          className="ml-2 text-xs sm:text-sm bg-primary text-primary-foreground px-2 py-1 rounded-full animate-wiggle"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.5 }}
-                        >
-                          Featured
-                        </motion.span>
-                      )}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>

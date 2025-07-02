@@ -141,7 +141,11 @@ All colors MUST be HSL.
   }
 
   .responsive-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8;
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 xs:gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  .mobile-responsive-grid {
+    @apply grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-6 lg:gap-8;
   }
 
   .responsive-text {
@@ -158,5 +162,25 @@ All colors MUST be HSL.
 
   .mobile-margin {
     @apply my-8 sm:my-12 md:my-16 lg:my-20 xl:my-24;
+  }
+
+  .mobile-text {
+    @apply text-xs xs:text-sm sm:text-base;
+  }
+
+  .mobile-heading {
+    @apply text-lg xs:text-xl sm:text-2xl md:text-3xl;
+  }
+
+  .mobile-card-padding {
+    @apply p-3 xs:p-4 sm:p-6;
+  }
+
+  .mobile-gap {
+    @apply gap-2 xs:gap-3 sm:gap-4;
+  }
+
+  .mobile-button {
+    @apply px-3 xs:px-4 sm:px-6 py-2 xs:py-2.5 sm:py-3 text-xs xs:text-sm sm:text-base;
   }
 }
