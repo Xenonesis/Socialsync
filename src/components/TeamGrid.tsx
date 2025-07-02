@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Mail, Phone, Linkedin, Twitter, Github } from 'lucide-react';
 
 interface TeamMember {
   name: string;
@@ -9,6 +11,9 @@ interface TeamMember {
   avatar: string;
   contact?: string;
   expertise: string[];
+  email?: string;
+  linkedin?: string;
+  portfolio?: string;
 }
 
 interface TeamGridProps {
@@ -71,56 +76,205 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
                 transition: { type: "spring", stiffness: 300 }
               }}
             >
-              <Card className="h-full bg-card-gradient border-0 shadow-soft hover:shadow-feature transition-all duration-500 hover-lift group animate-slide-up">
-                <CardHeader className="text-center">
-                  <motion.div 
-                    className="mb-4 flex justify-center"
-                    whileHover={{ 
-                      scale: 1.1,
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    <Avatar className="w-20 h-20">
-                      <AvatarImage src={member.avatar} alt={member.name} />
-                      <AvatarFallback className="text-lg font-semibold bg-primary text-primary-foreground">
-                        {member.name.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                  </motion.div>
-                  <CardTitle className="text-lg sm:text-xl text-foreground group-hover:text-primary transition-colors duration-300">
-                    {member.name}
-                  </CardTitle>
-                  <CardDescription className="text-primary font-medium group-hover:text-accent transition-colors duration-300">
-                    {member.role}
-                  </CardDescription>
-                  {member.contact && (
-                    <motion.p 
-                      className="text-sm text-muted-foreground mt-2 group-hover:text-foreground transition-colors duration-300"
-                      whileHover={{ scale: 1.05 }}
+              <Card className="h-full bg-gradient-to-b from-card to-card/80 backdrop-blur-sm border border-border/30 rounded-2xl overflow-hidden shadow-2xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-500 group relative">
+                {/* Background gradient effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Glow effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition duration-500 group-hover:duration-200" />
+                
+                <CardHeader className="p-0 relative z-10">
+                  <div className="relative w-full h-56 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center overflow-hidden">
+                    {/* Animated gradient overlay */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    
+                    <motion.div 
+                      className="relative z-10"
+                      whileHover={{ 
+                        scale: 1.05,
+                        transition: { type: 'spring', stiffness: 400, damping: 10 }
+                      }}
                     >
-                      Contact: {member.contact}
+                      <div className="relative">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-0 group-hover:opacity-100 blur-md transition duration-500 group-hover:duration-200" />
+                        <Avatar className="relative w-36 h-36 border-4 border-white/90 dark:border-gray-800 shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
+                          <AvatarImage 
+                            src={member.avatar} 
+                            alt={member.name}
+                            className="object-cover"
+                          />
+                          <AvatarFallback className="text-3xl font-bold bg-gradient-to-br from-primary to-accent text-white">
+                            {member.name.split(' ').map(n => n[0]).join('')}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                    </motion.div>
+                  </div>
+                  <div className="pt-24 pb-6 px-8">
+                    <motion.div 
+                      className="text-center mb-1"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <CardTitle className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80 group-hover:from-primary group-hover:to-accent transition-all duration-500">
+                        {member.name}
+                      </CardTitle>
+                    </motion.div>
+                    
+                    <motion.div 
+                      className="mb-4"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary dark:bg-primary/20 text-sm font-semibold group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:text-white transition-all duration-500">
+                        {member.role}
+                      </span>
+                    </motion.div>
+                    
+                    <motion.p 
+                      className="text-muted-foreground text-center leading-relaxed mb-6"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      {member.bio}
                     </motion.p>
-                  )}
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed group-hover:text-foreground transition-colors duration-300">
-                    {member.bio}
-                  </p>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">Expertise:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {member.expertise.map((skill, skillIndex) => (
-                        <motion.span 
-                          key={skillIndex}
-                          className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
-                          whileHover={{ scale: 1.1 }}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: skillIndex * 0.1 }}
+                    <motion.div 
+                      className="flex justify-center gap-4 mb-6"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="rounded-full h-10 w-10 bg-background/50 backdrop-blur-sm border-border/30 shadow-sm hover:bg-primary/10 hover:border-primary/50 hover:scale-105 transition-all duration-300 group/icon"
+                        asChild
+                      >
+                        <a 
+                          href={`tel:${member.contact?.replace(/[^0-9+]/g, '')}`}
+                          title={`Call ${member.name}`}
+                          aria-label={`Call ${member.name}`}
                         >
-                          {skill}
-                        </motion.span>
-                      ))}
+                          <span className="sr-only">Call {member.name}</span>
+                          <Phone className="h-4 w-4 text-muted-foreground group-hover/icon:text-primary transition-colors" aria-hidden="true" />
+                        </a>
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="rounded-full h-10 w-10 bg-background/50 backdrop-blur-sm border-border/30 shadow-sm hover:bg-primary/10 hover:border-primary/50 hover:scale-105 transition-all duration-300 group/icon"
+                        asChild
+                      >
+                        <a 
+                          href={`mailto:${member.email || 'contact@socialsync.com'}`}
+                          title={`Email ${member.name}`}
+                          aria-label={`Email ${member.name}`}
+                        >
+                          <span className="sr-only">Email {member.name}</span>
+                          <Mail className="h-4 w-4 text-muted-foreground group-hover/icon:text-primary transition-colors" aria-hidden="true" />
+                        </a>
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="rounded-full h-10 w-10 bg-background/50 backdrop-blur-sm border-border/30 shadow-sm hover:bg-blue-500/10 hover:border-blue-500/50 hover:scale-105 transition-all duration-300 group/icon"
+                        asChild
+                      >
+                        <a 
+                          href={member.linkedin || '#'} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          title={`${member.name}'s LinkedIn profile`}
+                          aria-label={`${member.name}'s LinkedIn profile`}
+                        >
+                          <span className="sr-only">{member.name}'s LinkedIn profile</span>
+                          <Linkedin className="h-4 w-4 text-muted-foreground group-hover/icon:text-[#0A66C2] transition-colors" aria-hidden="true" />
+                        </a>
+                      </Button>
+                      {member.portfolio && (
+                        <Button 
+                          variant="outline" 
+                          size="icon" 
+                          className="rounded-full h-10 w-10 bg-background/50 backdrop-blur-sm border-border/30 shadow-sm hover:bg-purple-500/10 hover:border-purple-500/50 hover:scale-105 transition-all duration-300 group/icon"
+                          asChild
+                        >
+                          <a 
+                            href={member.portfolio}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            title={`${member.name}'s Portfolio`}
+                            aria-label={`${member.name}'s Portfolio`}
+                          >
+                            <span className="sr-only">{member.name}'s Portfolio</span>
+                            <svg 
+                              className="h-4 w-4 text-muted-foreground group-hover/icon:text-purple-500 transition-colors" 
+                              viewBox="0 0 24 24" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              strokeWidth="2" 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M12 20h9"></path>
+                              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
+                          </a>
+                        </Button>
+                      )}
+                    </motion.div>
+                  </div>
+                </CardHeader>
+                <CardContent className="relative z-10">
+                  <div className="relative">
+                    {/* Animated border */}
+                    <motion.div 
+                      className="absolute -top-px left-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+                      initial={{ width: '0%', x: '-50%' }}
+                      whileInView={{ width: '80%' }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: 0.2 }}
+                    />
+                    
+                    <div className="pt-4">
+                      <motion.h4 
+                        className="text-xs font-semibold text-muted-foreground mb-4 text-center uppercase tracking-wider"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        Areas of Expertise
+                      </motion.h4>
+                      
+                      <motion.div 
+                        className="flex flex-wrap justify-center gap-2"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5, staggerChildren: 0.1 }}
+                      >
+                        {member.expertise.map((skill, skillIndex) => (
+                          <motion.span 
+                            key={skillIndex}
+                            className="text-xs px-4 py-1.5 rounded-full bg-background/80 backdrop-blur-sm border border-border/30 text-foreground/80 font-medium whitespace-nowrap shadow-sm hover:shadow-md transition-all duration-300 group/skill"
+                            whileHover={{ 
+                              scale: 1.05,
+                              backgroundColor: 'hsl(var(--primary))',
+                              borderColor: 'hsl(var(--primary))',
+                              color: 'white',
+                              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                            }}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: 0.5 + (skillIndex * 0.05) }}
+                          >
+                            <span className="relative z-10">{skill}</span>
+                            <span className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300" />
+                          </motion.span>
+                        ))}
+                      </motion.div>
                     </div>
                   </div>
                 </CardContent>

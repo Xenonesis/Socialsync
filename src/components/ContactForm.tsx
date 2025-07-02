@@ -10,6 +10,7 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobile: '',
     message: '',
   });
   const { toast } = useToast();
@@ -20,7 +21,7 @@ const ContactForm = () => {
       title: "Message Sent!",
       description: "Thank you for reaching out. We'll get back to you within 24 hours.",
     });
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', mobile: '', message: '' });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -95,6 +96,24 @@ const ContactForm = () => {
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.9 }}
+        >
+          <Label htmlFor="mobile" className="text-sm sm:text-base">Mobile Number</Label>
+          <Input
+            id="mobile"
+            name="mobile"
+            type="tel"
+            pattern="[0-9]{10}"
+            title="Please enter a valid 10-digit mobile number"
+            value={formData.mobile}
+            onChange={handleInputChange}
+            placeholder="1234567890"
+            className="mt-1 h-10 sm:h-12 transition-all duration-300 focus:scale-105"
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 1.0 }}
         >
           <Label htmlFor="message" className="text-sm sm:text-base">Message</Label>
           <Textarea
