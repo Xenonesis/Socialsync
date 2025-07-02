@@ -112,8 +112,8 @@ const Businesses = () => {
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 bg-hero-gradient">
-        <div className="container mx-auto mobile-padding">
+      <section className="py-8 xs:py-12 sm:py-16 lg:py-20 bg-hero-gradient">
+        <div className="container mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ const Businesses = () => {
             className="text-center text-foreground"
           >
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6"
+              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 xs:mb-4 sm:mb-6"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -129,7 +129,7 @@ const Businesses = () => {
               Our Services
             </motion.h1>
             <motion.p 
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/80 dark:text-muted-foreground max-w-3xl mx-auto"
+              className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/80 dark:text-muted-foreground max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -141,8 +141,8 @@ const Businesses = () => {
       </section>
 
       {/* Services Tabs */}
-      <section className="py-16 sm:py-20 bg-feature">
-        <div className="container mx-auto mobile-padding">
+      <section className="py-8 xs:py-12 sm:py-16 lg:py-20 bg-feature">
+        <div className="container mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -162,7 +162,7 @@ const Businesses = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 xs:mb-4">
                     Web Development Projects
                   </h2>
                   <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8">
@@ -520,8 +520,8 @@ const WebDevCard = ({ title, icon, services, description }: {
       whileHover={{ y: -10 }}
       className="w-full"
     >
-      <CardSpotlight className="h-72 xs:h-80 sm:h-96 w-full max-w-sm mx-auto">
-        <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3 relative z-20 mt-2">
+      <CardSpotlight className="h-64 xs:h-72 sm:h-80 md:h-96 w-full max-w-sm mx-auto">
+        <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3 relative z-20">
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
@@ -529,13 +529,13 @@ const WebDevCard = ({ title, icon, services, description }: {
           >
             {icon}
           </motion.div>
-          <p className="text-base xs:text-lg sm:text-xl font-bold text-foreground leading-tight">
+          <p className="text-sm xs:text-base sm:text-lg md:text-xl font-bold text-foreground leading-tight">
             {title}
           </p>
         </div>
-        <div className="text-muted-foreground mt-3 xs:mt-4 relative z-20">
-          <p className="text-xs xs:text-sm mb-3 xs:mb-4 leading-relaxed">{description}</p>
-          <ul className="list-none mt-3 xs:mt-4 space-y-1 xs:space-y-2">
+        <div className="text-muted-foreground mt-2 xs:mt-3 sm:mt-4 relative z-20">
+          <p className="text-xs sm:text-sm mb-2 xs:mb-3 sm:mb-4 leading-relaxed">{description}</p>
+          <ul className="list-none mt-2 xs:mt-3 sm:mt-4 space-y-1 xs:space-y-2">
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -567,8 +567,8 @@ const SocialMediaCard = ({ title, icon, services, description }: {
       whileHover={{ y: -10 }}
       className="w-full"
     >
-      <CardSpotlight className="h-72 xs:h-80 sm:h-96 w-full max-w-sm mx-auto">
-        <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3 relative z-20 mt-2">
+      <CardSpotlight className="h-64 xs:h-72 sm:h-80 md:h-96 w-full max-w-sm mx-auto">
+        <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3 relative z-20">
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
@@ -576,13 +576,13 @@ const SocialMediaCard = ({ title, icon, services, description }: {
           >
             {icon}
           </motion.div>
-          <p className="text-base xs:text-lg sm:text-xl font-bold text-foreground leading-tight">
+          <p className="text-sm xs:text-base sm:text-lg md:text-xl font-bold text-foreground leading-tight">
             {title}
           </p>
         </div>
-        <div className="text-muted-foreground mt-3 xs:mt-4 relative z-20">
-          <p className="text-xs xs:text-sm mb-3 xs:mb-4 leading-relaxed">{description}</p>
-          <ul className="list-none mt-3 xs:mt-4 space-y-1 xs:space-y-2">
+        <div className="text-muted-foreground mt-2 xs:mt-3 sm:mt-4 relative z-20">
+          <p className="text-xs sm:text-sm mb-2 xs:mb-3 sm:mb-4 leading-relaxed">{description}</p>
+          <ul className="list-none mt-2 xs:mt-3 sm:mt-4 space-y-1 xs:space-y-2">
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -602,9 +602,9 @@ const SocialMediaCard = ({ title, icon, services, description }: {
 
 const ServiceStep = ({ title }: { title: string }) => {
   return (
-    <li className="flex gap-2 items-start">
+    <li className="flex gap-1.5 xs:gap-2 items-start">
       <Check className="h-3 w-3 xs:h-4 xs:w-4 text-primary mt-0.5 xs:mt-1 flex-shrink-0" />
-      <p className="text-foreground text-xs xs:text-sm leading-relaxed">{title}</p>
+      <p className="text-foreground text-xs leading-relaxed">{title}</p>
     </li>
   );
 };

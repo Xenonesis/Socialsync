@@ -6,6 +6,116 @@
 All colors MUST be HSL.
 */
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-blob {
+  animation: blob 15s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Form Input Focus Effects */
+.focus-scale {
+  transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo);
+}
+
+.focus-scale:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Button Hover Effect */
+.hover-lift {
+  transition: transform 0.3s var(--ease-out-back), box-shadow 0.3s var(--ease-out-back);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Success Message Animation */
+.success-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.success-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.success-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.success-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Loading Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Floating Label Effect */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 0 0.25rem;
+  color: hsl(220 5% 45%);
+  transition: all 0.2s var(--ease-out-expo);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.input-field:focus + .input-label,
+.input-field:not(:placeholder-shown) + .input-label {
+  top: 0;
+  left: 0.75rem;
+  font-size: 0.75rem;
+  color: hsl(220 8% 15%);
+  background-color: white;
+  padding: 0 0.5rem;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -47,6 +157,15 @@ All colors MUST be HSL.
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Contact Form Animations */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    /* Mobile breakpoints */
+    --mobile-xs: 475px;
+    --mobile-sm: 640px;
+    --mobile-md: 768px;
 
     --radius: 0.5rem;
 
@@ -182,5 +301,33 @@ All colors MUST be HSL.
 
   .mobile-button {
     @apply px-3 xs:px-4 sm:px-6 py-2 xs:py-2.5 sm:py-3 text-xs xs:text-sm sm:text-base;
+  }
+
+  .mobile-container {
+    @apply px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16;
+  }
+
+  .mobile-section-padding {
+    @apply py-8 xs:py-12 sm:py-16 lg:py-20;
+  }
+
+  .mobile-card {
+    @apply rounded-lg xs:rounded-xl sm:rounded-2xl p-3 xs:p-4 sm:p-6 md:p-8;
+  }
+
+  .mobile-input {
+    @apply h-10 xs:h-11 sm:h-12 text-sm sm:text-base;
+  }
+
+  .mobile-icon {
+    @apply w-4 h-4 xs:w-5 xs:h-5;
+  }
+
+  .mobile-spacing {
+    @apply space-y-3 xs:space-y-4 sm:space-y-6;
+  }
+
+  .mobile-grid {
+    @apply grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-6 lg:gap-8;
   }
 }

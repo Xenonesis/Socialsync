@@ -32,7 +32,7 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        "group/spotlight p-10 rounded-md relative border overflow-hidden",
+        "group/spotlight p-4 xs:p-6 sm:p-8 md:p-10 rounded-lg sm:rounded-md relative border overflow-hidden",
         "bg-card text-foreground",
         className
       )}

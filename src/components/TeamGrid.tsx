@@ -43,16 +43,16 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-background">
-      <div className="container mx-auto mobile-padding">
+    <section className="py-8 xs:py-12 sm:py-16 lg:py-20 bg-background">
+      <div className="container mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-6 xs:mb-8 sm:mb-12 lg:mb-16"
         >
           <motion.h2 
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4"
+            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 xs:mb-4"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -65,7 +65,7 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-6 sm:gap-8"
         >
           {teamMembers.map((member, index) => (
             <motion.div
@@ -76,7 +76,7 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
                 transition: { type: "spring", stiffness: 300 }
               }}
             >
-              <Card className="h-full bg-gradient-to-b from-card to-card/80 backdrop-blur-sm border border-border/30 rounded-2xl overflow-hidden shadow-2xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-500 group relative">
+              <Card className="h-full bg-gradient-to-b from-card to-card/80 backdrop-blur-sm border border-border/30 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-500 group relative">
                 {/* Background gradient effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
@@ -84,7 +84,7 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition duration-500 group-hover:duration-200" />
                 
                 <CardHeader className="p-0 relative z-10">
-                  <div className="relative w-full h-56 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center overflow-hidden">
+                  <div className="relative w-full h-40 xs:h-48 sm:h-56 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center overflow-hidden">
                     {/* Animated gradient overlay */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
@@ -97,27 +97,27 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
                     >
                       <div className="relative">
                         <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-0 group-hover:opacity-100 blur-md transition duration-500 group-hover:duration-200" />
-                        <Avatar className="relative w-36 h-36 border-4 border-white/90 dark:border-gray-800 shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
+                        <Avatar className="relative w-24 h-24 xs:w-28 xs:h-28 sm:w-36 sm:h-36 border-2 xs:border-4 border-white/90 dark:border-gray-800 shadow-2xl group-hover:shadow-primary/20 transition-all duration-500">
                           <AvatarImage 
                             src={member.avatar} 
                             alt={member.name}
                             className="object-cover"
                           />
-                          <AvatarFallback className="text-3xl font-bold bg-gradient-to-br from-primary to-accent text-white">
+                          <AvatarFallback className="text-lg xs:text-2xl sm:text-3xl font-bold bg-gradient-to-br from-primary to-accent text-white">
                             {member.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
                       </div>
                     </motion.div>
                   </div>
-                  <div className="pt-24 pb-6 px-8">
+                  <div className="pt-16 xs:pt-20 sm:pt-24 pb-4 xs:pb-6 px-4 xs:px-6 sm:px-8">
                     <motion.div 
                       className="text-center mb-1"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
                     >
-                      <CardTitle className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80 group-hover:from-primary group-hover:to-accent transition-all duration-500">
+                      <CardTitle className="text-lg xs:text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80 group-hover:from-primary group-hover:to-accent transition-all duration-500">
                         {member.name}
                       </CardTitle>
                     </motion.div>
@@ -128,13 +128,13 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary dark:bg-primary/20 text-sm font-semibold group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:text-white transition-all duration-500">
+                      <span className="inline-block px-2 xs:px-3 py-0.5 xs:py-1 rounded-full bg-primary/10 text-primary dark:bg-primary/20 text-xs xs:text-sm font-semibold group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:text-white transition-all duration-500">
                         {member.role}
                       </span>
                     </motion.div>
                     
                     <motion.p 
-                      className="text-muted-foreground text-center leading-relaxed mb-6"
+                      className="text-xs xs:text-sm text-muted-foreground text-center leading-relaxed mb-4 xs:mb-6"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
@@ -142,7 +142,7 @@ const TeamGrid = ({ teamMembers }: TeamGridProps) => {
                       {member.bio}
                     </motion.p>
                     <motion.div 
-                      className="flex justify-center gap-4 mb-6"
+                      className="flex justify-center gap-2 xs:gap-3 sm:gap-4 mb-4 xs:mb-6"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}

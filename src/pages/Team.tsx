@@ -9,7 +9,7 @@ const Team = () => {
     {
       name: "Himanshu",
       role: "Founder",
-      bio: "Founder of Social Sync, dedicated to providing innovative web solutions and social media management services.",
+      bio: "Founder of Social Sync, dedicated to providing social media management services.",
       avatar: `${window.location.origin}/owner.jpg`,
       contact: "+91 7061752337",
       email: "business@socialsync.com",
@@ -45,11 +45,15 @@ const Team = () => {
     <div className="min-h-screen pt-16">
       <TeamHero />
       <TeamGrid teamMembers={teamMembers} />
-      <section className="py-16 sm:py-20 bg-muted">
-        <div className="container mx-auto mobile-padding">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
-            <ContactForm />
-            <ServicesInfo />
+      <section className="py-8 xs:py-12 sm:py-16 lg:py-20 bg-muted">
+        <div className="container mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xs:gap-8 sm:gap-10 lg:gap-12 items-start">
+            <div className="order-1 lg:order-1">
+              <ContactForm />
+            </div>
+            <div className="order-2 lg:order-2">
+              <ServicesInfo />
+            </div>
           </div>
         </div>
       </section>
