@@ -33,7 +33,7 @@ const ServicesInfo = () => {
             className="text-primary font-semibold mx-1 inline-block" 
             duration={2000}
           />
-          web development projects at affordable cost
+          web development projects with cutting-edge technology
         </div>
         <div className="flex flex-wrap gap-2 mt-4">
           {["React", "Next.js", "TypeScript", "Tailwind CSS"].map((tech, index) => (
@@ -68,7 +68,7 @@ const ServicesInfo = () => {
             className="text-accent font-semibold mx-1 inline-block" 
             duration={2200}
           />
-          strategies at affordable cost
+          strategies for optimal engagement
         </div>
         <div className="flex flex-wrap gap-2 mt-4">
           {["Content Creation", "Analytics", "Growth Strategy", "Community Management"].map((service, index) => (

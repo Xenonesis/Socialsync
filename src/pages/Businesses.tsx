@@ -10,6 +10,7 @@ import { Check, Code, Smartphone, Globe, Database, Palette, Zap } from 'lucide-r
 
 const Businesses = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [activeTab, setActiveTab] = useState('social');
 
   const projects = [
     {
@@ -133,7 +134,7 @@ const Businesses = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Professional web development and social media management at affordable costs
+              Professional web development and social media management services
             </motion.p>
           </motion.div>
         </div>
@@ -148,10 +149,10 @@ const Businesses = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <Tabs defaultValue="webdev" className="w-full">
+            <Tabs defaultValue="social" className="w-full" onValueChange={setActiveTab}>
               <TabsList className="grid w-full max-w-md mx-auto grid-cols-1 xs:grid-cols-2 mb-6 sm:mb-8 md:mb-12 gap-1 xs:gap-0 h-auto xs:h-10">
-                <TabsTrigger value="webdev" className="text-xs xs:text-sm sm:text-base py-2 xs:py-1.5 px-2 xs:px-3 min-h-[40px] xs:min-h-auto">Web Development</TabsTrigger>
                 <TabsTrigger value="social" className="text-xs xs:text-sm sm:text-base py-2 xs:py-1.5 px-2 xs:px-3 min-h-[40px] xs:min-h-auto">Social Media</TabsTrigger>
+                <TabsTrigger value="webdev" className="text-xs xs:text-sm sm:text-base py-2 xs:py-1.5 px-2 xs:px-3 min-h-[40px] xs:min-h-auto">Web Development</TabsTrigger>
               </TabsList>
               
               <TabsContent value="webdev" className="space-y-12">
@@ -173,7 +174,7 @@ const Businesses = () => {
                         duration={2000}
                       />
                     </span>
-                    <span>web development projects at affordable cost</span>
+                    <span>web development projects with quality and precision</span>
                   </div>
                 </motion.div>
 
@@ -328,7 +329,7 @@ const Businesses = () => {
                         duration={2200}
                       />
                     </span>
-                    <span>strategies at affordable cost</span>
+                    <span>strategies for maximum impact</span>
                   </div>
                 </motion.div>
                 
@@ -340,26 +341,48 @@ const Businesses = () => {
                   transition={{ duration: 0.8, staggerChildren: 0.2 }}
                 >
                   <SocialMediaCard 
-                    title="Content Creation"
+                    title="Festival Posts"
                     icon={<Palette className="h-8 w-8 text-pink-500" />}
                     services={[
-                      "Visual Content Design",
-                      "Copywriting & Captions",
-                      "Video Production",
-                      "Brand Consistency"
+                      "Custom Festival Designs",
+                      "Brand Logo Integration",
+                      "Seasonal Campaigns",
+                      "Multi-Platform Ready"
                     ]}
-                    description="Create engaging, on-brand content that resonates with your audience."
+                    description="Engaging festival posts with your brand logo, perfect for seasonal marketing."
                   />
                   <SocialMediaCard 
-                    title="Account Management"
+                    title="Custom Post Design"
+                    icon={<Palette className="h-8 w-8 text-blue-500" />}
+                    services={[
+                      "Unique Visual Concepts",
+                      "Brand-Centric Designs",
+                      "Custom Illustrations",
+                      "Multiple Revisions"
+                    ]}
+                    description="Tailored social media posts that perfectly represent your brand identity."
+                  />
+                  <SocialMediaCard 
+                    title="Sale & Discount Posts"
+                    icon={<Palette className="h-8 w-8 text-green-500" />}
+                    services={[
+                      "Eye-Catching Offers",
+                      "Limited-Time Deals",
+                      "Promotional Banners",
+                      "Call-to-Action Focused"
+                    ]}
+                    description="Convert more with attractive sale and discount post designs that drive sales."
+                  />
+                  <SocialMediaCard 
+                    title="Instagram Management"
                     icon={<Smartphone className="h-8 w-8 text-blue-500" />}
                     services={[
+                      "Starting at just ₹799/month",
                       "Daily Posting & Scheduling",
                       "Community Engagement",
-                      "Customer Support",
                       "Profile Optimization"
                     ]}
-                    description="Complete management of your social media presence across all platforms."
+                    description="Complete Instagram management with proven growth strategies and engagement."
                   />
                   <SocialMediaCard 
                     title="Growth & Analytics"
@@ -448,7 +471,7 @@ const Businesses = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Ready to Build Your Next Project?
+              {activeTab === 'webdev' ? 'Ready to Build Your Next Web Project?' : 'Ready to Elevate Your Social Media Presence?'}
             </motion.h2>
             <motion.p 
               className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8"
@@ -456,7 +479,9 @@ const Businesses = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Let's discuss how Social Sync can bring your web development vision to life
+              {activeTab === 'webdev' 
+                ? "Let's build something amazing together with custom web development solutions"
+                : "Let's grow your online presence with expert social media management"}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

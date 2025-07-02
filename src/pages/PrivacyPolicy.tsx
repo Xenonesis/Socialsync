@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
       <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
 
       <h2>7. Contact Us</h2>
-      <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@socialsync.example.com" className="text-primary hover:underline">privacy@socialsync.example.com</a>.</p>
+      <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:Himanshu.socialsync@gmail.com" className="text-primary hover:underline">Himanshu.socialsync@gmail.com</a>.</p>
     </PolicyLayout>
   );
 };

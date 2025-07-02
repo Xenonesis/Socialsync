@@ -8,20 +8,20 @@ const Team = () => {
   const teamMembers = [
     {
       name: "Himanshu",
-      role: "Owner",
-      bio: "Founder and owner of Social Sync, dedicated to providing innovative web solutions and social media management services.",
+      role: "Founder",
+      bio: "Founder of Social Sync, dedicated to providing innovative web solutions and social media management services.",
       avatar: `${window.location.origin}/owner.jpg`,
       contact: "+91 7061752337",
-      expertise: ["Business Leadership", "Social Media Strategy", "Graphics Designer"],
+      expertise: ["Business Leadership", "Social Media Strategy", "Graphics Design"],
     },
     {
       name: "Aditya",
       role: "Technical Lead",
       bio: "Technical expert at Social Sync, specializing in web development and creating robust digital solutions.",
-      avatar: "A",
+      avatar: `${window.location.origin}/1.png`,
       contact: "+91 9142409903",
       expertise: ["Web Development", "Frontend Development", "Backend Development", "Cybersecurity", "SEO Management"],
-    },
+    }
   ];
 
   return (

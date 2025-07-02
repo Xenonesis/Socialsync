@@ -15,18 +15,28 @@ const Landing = () => {
     {
       title: "Social Media Strategy",
       description: "Comprehensive planning and execution of social media campaigns tailored to your brand's unique voice and goals.",
-      icon: "📱",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+          <path d="M22 12a10 10 0 1 0-20 0 10 10 0 0 0 20 0z" />
+          <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+          <line x1="9" y1="9" x2="9.01" y2="9" />
+          <line x1="15" y1="9" x2="15.01" y2="9" />
+        </svg>
+      ),
+      color: "from-blue-500 to-indigo-600"
     },
     {
-      title: "Web Development Projects",
+      title: "Web Development",
       description: "Modern, responsive websites and web applications built with cutting-edge technologies to elevate your online presence.",
-      icon: "💻",
-    },
-    {
-      title: "Analytics & Branding",
-      description: "Data-driven insights and comprehensive branding solutions to optimize your digital strategy and growth.",
-      icon: "📊",
-    },
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+          <rect width="20" height="14" x="2" y="3" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+      ),
+      color: "from-emerald-500 to-teal-600"
+    }
   ];
 
   const handleNewsletterSignup = (e: React.FormEvent) => {
@@ -110,7 +120,7 @@ const Landing = () => {
                     className="text-accent font-semibold mx-1 inline-block" 
                   />
                 </span>
-                <span>at affordable prices.</span>
+                <span>for your business needs.</span>
               </motion.div>
 
               <motion.div 
@@ -226,58 +236,85 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 overflow-hidden bg-gradient-to-b from-background to-muted/20">
+        {/* Background elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNTQgMThjMC0yLjIwOS0xLjc5MS00LTQtNEgxMGMtMi4yMDkgMC00IDEuNzkxLTQgNHYyNGMwIDIuMjA5IDEuNzkxIDQgNCA0aDQwYzIuMjA5IDAgNC0xLjc5MSA0LTRWMTh6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==')]" />
+        </div>
+
+        <div className="container relative mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12 sm:mb-16 mobile-padding"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-center mb-16 max-w-3xl mx-auto"
           >
-            <motion.h2 
-              className="responsive-heading font-bold text-foreground mb-4 sm:mb-6"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <motion.span 
+              className="inline-block px-3 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              Our Core Services
+              Our Services
+            </motion.span>
+            <motion.h2 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Transform Your Digital Presence
             </motion.h2>
             <motion.p 
-              className="responsive-text text-muted-foreground max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
+              className="text-muted-foreground text-lg leading-relaxed"
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ delay: 0.4 }}
             >
               Comprehensive digital solutions designed to transform your business presence and drive measurable growth
             </motion.p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mobile-padding">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                whileHover={{ y: -10 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className="group relative"
               >
-                <Card className="h-full border-0 shadow-soft hover:shadow-feature transition-all duration-500 hover-lift group bg-card-gradient hover:bg-gradient-to-br hover:from-background hover:to-muted/50">
-                  <CardHeader className="text-center">
-                    <motion.div 
-                      className="text-4xl sm:text-5xl mb-4 group-hover:animate-bounce-in"
-                      whileHover={{ scale: 1.2, rotate: 10 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      {feature.icon}
-                    </motion.div>
-                    <CardTitle className="text-lg sm:text-xl lg:text-2xl group-hover:scale-105 transition-transform duration-300 text-foreground">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500 group-hover:duration-200"></div>
+                <Card className="relative h-full bg-background/80 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-transparent transition-all duration-300">
+                  <CardContent className="p-8">
+                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 bg-gradient-to-br ${feature.color} text-white`}>
+                      <motion.div 
+                        className="flex items-center justify-center w-full h-full"
+                        whileHover={{ scale: 1.1, rotate: [0, -10, 10, -10, 0] }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        {feature.icon}
+                      </motion.div>
+                    </div>
+                    <CardTitle className="text-xl font-bold mb-3 text-foreground group-hover:translate-x-1 transition-transform duration-300">
                       {feature.title}
                     </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-center text-muted-foreground text-sm sm:text-base leading-relaxed group-hover:text-foreground transition-colors duration-300">
+                    <p className="text-muted-foreground leading-relaxed mb-6 group-hover:text-foreground/90 transition-colors duration-300">
                       {feature.description}
-                    </CardDescription>
+                    </p>
+                    <div className="flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                      <span>Learn more</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 w-4 h-4">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -286,58 +323,88 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+      {/* FAQ Section */}
       <section className="py-16 sm:py-20 bg-muted">
-        <div className="container mx-auto mobile-padding">
+        <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto text-center"
+            className="max-w-4xl mx-auto text-center mb-12"
           >
-            <motion.h2 
-              className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <motion.span 
+              className="inline-block px-3 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              Stay Connected
+              Got Questions?
+            </motion.span>
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Frequently Asked Questions
             </motion.h2>
-            <motion.p 
-              className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8"
-              initial={{ opacity: 0, y: 20 }}
+            <motion.p
+              className="text-lg text-muted-foreground"
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Get the latest insights, tips, and updates on digital trends and strategies
+              Find answers to common questions about our services and how we can help you
             </motion.p>
-            
-            <motion.form 
-              onSubmit={handleNewsletterSignup} 
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <motion.div className="flex-1" whileFocus={{ scale: 1.02 }}>
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 sm:h-14 text-base transition-all duration-300 focus:shadow-lg"
-                  required
-                />
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              {
+                question: "What services do you offer?",
+                answer: "We specialize in social media strategy and web development, helping businesses establish and grow their online presence with customized solutions."
+              },
+              {
+                question: "How can I get started?",
+                answer: "Getting started is easy! Simply reach out to us through our contact form or email, and we'll schedule a consultation to discuss your specific needs and goals."
+              },
+              {
+                question: "What makes you different from other agencies?",
+                answer: "Our unique approach combines creative strategy with technical expertise, ensuring that every solution we deliver is both beautiful and effective."
+              },
+              {
+                question: "Do you offer ongoing support?",
+                answer: "Yes, we provide comprehensive support and maintenance packages to ensure your digital assets continue to perform at their best."
+              }
+            ].map((faq, index) => (
+              <motion.div 
+                key={index}
+                className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Button type="submit" size="lg" className="px-6 sm:px-8 h-12 sm:h-14 text-base hover-lift">
-                  Subscribe
-                </Button>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
+                <p className="text-muted-foreground">{faq.answer}</p>
               </motion.div>
-            </motion.form>
+            ))}
+          </div>
+
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <p className="text-muted-foreground mb-4">Still have questions?</p>
+            <Button 
+              asChild 
+              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white shadow-lg hover:shadow-blue-500/20 transition-all duration-300"
+            >
+              <Link to="/contact">
+                Contact Us
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </section>
