@@ -1,14 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Linkedin, Send, Mail, Phone, MapPin, Globe, ArrowDown, ChevronDown, Sparkles, Clock } from 'lucide-react';
+import { Linkedin, Send, Mail, Phone, MapPin, Globe, ArrowDown, ChevronDown, Sparkles, Clock, MessageCircle } from 'lucide-react';
 import { teamMembers } from '@/data/teamMembers';
-import { useEffect, useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { toast } from 'sonner';
 
 // Particle Background Component
 const ParticleBackground = () => {
@@ -161,75 +160,39 @@ const ScrollDownIndicator = () => {
 };
 
 const Team = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formValues = Object.fromEntries(formData.entries());
+    
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('https://api.socialsync.com/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      // Reset form
+      e.currentTarget.reset();
+      toast.success('Message sent successfully! We\'ll get back to you soon.');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error('Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen pt-16 bg-gradient-to-b from-background to-background/95">
-      {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Particle Background */}
-        <ParticleBackground />
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
-        
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.5))]" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto py-20"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-            >
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Meet Our Talented Team</span>
-            </motion.div>
-            
-            <motion.h1 
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              Meet Our <span className="bg-gradient-to-r from-primary to-accent bg-clip-text">Expert</span> Team
-            </motion.h1>
-            
-            <motion.p 
-              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              The brilliant minds behind our innovative solutions. We're a diverse team of experts passionate about creating exceptional digital experiences.
-            </motion.p>
-            
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            >
-              <Button className="px-8 py-6 text-base font-medium rounded-xl bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transition-all transform hover:-translate-y-0.5">
-                Join Our Team
-                <ArrowDown className="ml-2 h-4 w-4" />
-              </Button>
-              <Button variant="outline" className="px-8 py-6 text-base font-medium rounded-xl border-2 border-border/50 hover:border-primary/50 transition-colors">
-                View Open Positions
-              </Button>
-            </motion.div>
-          </motion.div>
-          
-          {/* Scroll Down Indicator */}
-          <ScrollDownIndicator />
-        </div>
-      </section>
-
       {/* Team Grid */}
       <section className="relative py-16 sm:py-20 lg:py-28 overflow-hidden">
         {/* Decorative elements */}
@@ -334,47 +297,58 @@ const Team = () => {
                     Fill out the form and we'll get back to you within 24 hours.
                   </p>
                 </CardHeader>
-                <form className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <Input 
+                        name="firstName"
                         placeholder="First Name" 
                         className="h-12 px-4 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-colors"
+                        required
                       />
                     </div>
                     <div className="space-y-1">
                       <Input 
+                        name="lastName"
                         placeholder="Last Name" 
                         className="h-12 px-4 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-colors"
+                        required
                       />
                     </div>
                   </div>
                   <div className="space-y-1">
                     <Input 
+                      name="email"
                       placeholder="Email" 
                       type="email" 
                       className="h-12 px-4 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-colors"
+                      required
                     />
                   </div>
                   <div className="space-y-1">
                     <Input 
+                      name="phone"
                       placeholder="Phone" 
                       type="tel" 
                       className="h-12 px-4 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-colors"
+                      required
                     />
                   </div>
                   <div className="space-y-1">
                     <Textarea 
+                      name="message"
                       placeholder="Your Message" 
                       rows={4} 
                       className="p-4 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-colors"
+                      required
                     />
                   </div>
                   <Button 
                     type="submit" 
                     className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-lg font-medium transition-all duration-300 transform hover:-translate-y-0.5"
+                    disabled={isSubmitting}
                   >
-                    Send Message
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                     <Send className="ml-2 h-4 w-4" />
                   </Button>
                 </form>
@@ -425,28 +399,35 @@ const Team = () => {
                   </div>
                   <div className="ml-4">
                     <h4 className="text-sm font-medium text-foreground">Phone</h4>
-                    <a href="tel:+1234567890" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                      +1 (234) 567-890
-                    </a>
+                    <div className="space-y-1">
+                      <a href="tel:+917061752337" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                        +91 7061752337
+                      </a>
+                      <a href="tel:+917838472802" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                        +91 78384 72802
+                      </a>
+                    </div>
                   </div>
                 </motion.div>
 
-                <motion.div 
-                  className="flex items-start group"
+                <motion.a 
+                  href="https://wa.me/message/GDKO46FNFXKBC1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start group cursor-pointer"
                   whileHover={{ x: 5 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                 >
-                  <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
-                    <MapPin className="h-5 w-5" />
+                  <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-200 dark:group-hover:bg-green-900/50 transition-colors">
+                    <MessageCircle className="h-5 w-5" />
                   </div>
                   <div className="ml-4">
-                    <h4 className="text-sm font-medium text-foreground">Location</h4>
-                    <p className="text-sm text-muted-foreground">
-                      123 Business Street, Suite 100<br />
-                      San Francisco, CA 94103
+                    <h4 className="text-sm font-medium text-foreground">WhatsApp</h4>
+                    <p className="text-sm text-muted-foreground group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                      Chat with us on WhatsApp
                     </p>
                   </div>
-                </motion.div>
+                </motion.a>
 
                 <motion.div 
                   className="flex items-start group"
@@ -620,16 +601,23 @@ const TeamMemberCard = ({ member }: { member: typeof teamMembers[0] }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Button 
-                variant="outline" 
-                className="w-full rounded-xl border-primary/30 text-primary dark:text-foreground hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group/button relative overflow-hidden"
+              <a 
+                href={`tel:${member.contact.replace(/\s+/g, '')}`}
+                className="block w-full"
               >
-                <span className="relative z-10 flex items-center justify-center">
-                  <span className="group-hover/button:translate-x-1 transition-transform duration-300 text-foreground dark:text-inherit">Contact Me</span>
-                  <Send className="ml-2 h-4 w-4 opacity-0 -translate-x-2 group-hover/button:opacity-100 group-hover/button:translate-x-0 transition-all duration-300" />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover/button:opacity-100 transition-opacity duration-300" />
-              </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full rounded-xl border-primary/30 text-primary dark:text-foreground hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group/button relative overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center justify-center">
+                    <span className="group-hover/button:translate-x-1 transition-transform duration-300 text-foreground dark:text-inherit">
+                      {member.contact}
+                    </span>
+                    <Phone className="ml-2 h-4 w-4 opacity-0 -translate-x-2 group-hover/button:opacity-100 group-hover/button:translate-x-0 transition-all duration-300" />
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover/button:opacity-100 transition-opacity duration-300" />
+                </Button>
+              </a>
             </motion.div>
           </div>
         </div>

@@ -1,0 +1,1563 @@
+import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { toast } from 'sonner';
+
+// Icons
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Twitter,
+  Instagram,
+  Github,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+  Linkedin,
+  Sparkles,
+  MessageSquareText
+} from 'lucide-react';
+
+// UI Components
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+
+// Data
+import { teamMembers } from '@/data/teamMembers';
+
+// ====== Type Definitions ======
+type OfficeHours = {
+  day: string;
+  hours: string;
+  isOpen: boolean;
+};
+
+type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  socials?: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+  };
+  twitter?: string;
+  linkedin?: string;
+  github?: string;
+};
+
+type ContactInfo = {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  href: string;
+  label: string;
+};
+
+};
+
+type SocialLink = {
+  name: string;
+  icon: React.ReactNode;
+  href: string;
+  color: string;
+};
+
+// ==============================
+// Constants
+// ==============================
+
+const contactInfo: ContactInfo[] = [
+  {
+    icon: <Mail className="w-5 h-5 text-primary" />,
+    title: 'Email Us',
+    description: 'contact@example.com',
+    href: 'mailto:contact@example.com'
+  },
+  {
+    icon: <Phone className="w-5 h-5 text-primary" />,
+    title: 'Call Us',
+    description: '+1 (555) 123-4567',
+    href: 'tel:+15551234567'
+  },
+  {
+    icon: <MapPin className="w-5 h-5 text-primary" />,
+    title: 'Visit Us',
+    description: '123 Main St, City, Country',
+    href: 'https://maps.google.com'
+  }
+];
+
+const socialLinks: SocialLink[] = [
+  {
+    name: 'Twitter',
+    icon: <Twitter className="w-5 h-5" />,
+    href: 'https://twitter.com/example',
+    color: 'hover:text-blue-400'
+  },
+  {
+    name: 'Instagram',
+    icon: <Instagram className="w-5 h-5" />,
+    href: 'https://instagram.com/example',
+    color: 'hover:text-pink-500'
+  },
+  {
+    name: 'GitHub',
+    icon: <Github className="w-5 h-5" />,
+    href: 'https://github.com/example',
+    color: 'hover:text-gray-700 dark:hover:text-gray-300'
+  },
+  {
+    name: 'LinkedIn',
+    icon: <Linkedin className="w-5 h-5" />,
+    href: 'https://linkedin.com/company/example',
+    color: 'hover:text-blue-600'
+  }
+];
+
+// Particle Background Component
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (canvasRef.current) {
+        const { width, height } = canvasRef.current.getBoundingClientRect();
+        setDimensions({ width, height });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  useEffect(() => {
+    if (!canvasRef.current || dimensions.width === 0 || dimensions.height === 0) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = dimensions.width;
+    canvas.height = dimensions.height;
+
+    const particles: { x: number; y: number; size: number; speedX: number; speedY: number }[] = [];
+    const particleCount = Math.floor((dimensions.width * dimensions.height) / 15000);
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * dimensions.width,
+        y: Math.random() * dimensions.height,
+        size: Math.random() * 2 + 1,
+        speedX: Math.random() * 0.5 - 0.25,
+        speedY: Math.random() * 0.5 - 0.25,
+      });
+    }
+
+    let animationFrameId: number;
+
+    const animate = () => {
+      ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+      ctx.fillStyle = 'rgba(99, 102, 241, 0.7)';
+
+      particles.forEach((particle, index) => {
+        // Update position
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        // Bounce off edges
+        if (particle.x < 0 || particle.x > dimensions.width) {
+          particle.speedX *= -1;
+        }
+        if (particle.y < 0 || particle.y > dimensions.height) {
+          particle.speedY *= -1;
+        }
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw connections
+        for (let j = index + 1; j < particles.length; j++) {
+          const dx = particles[j].x - particle.x;
+          const dy = particles[j].y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 100})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [dimensions]);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full opacity-20 dark:opacity-10 transition-opacity duration-300"
+      />
+    </div>
+  );
+};
+
+// Scroll Down Indicator Component
+const ScrollDownIndicator = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsVisible(window.scrollY < 100);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  return (
+    <motion.div
+      className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: isVisible ? 1 : 0,
+        y: isVisible ? 0 : 20,
+        transition: { duration: 0.3 }
+      }}
+    >
+      <div className="flex flex-col items-center">
+        <span className="text-sm text-muted-foreground mb-2">Scroll Down</span>
+        <ChevronDown className="w-6 h-6 text-muted-foreground animate-bounce" />
+      </div>
+    </motion.div>
+  );
+};
+
+// Main Team Component
+export default function Team() {
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Particle Background */}
+      <ParticleBackground />
+      
+      {/* Scroll Down Indicator */}
+      <ScrollDownIndicator />
+      
+      <main className="relative z-10">
+        {/* Team Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600 mb-4"
+            >
+              Meet Our Team
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.1 }}
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            >
+              Passionate individuals working together to create amazing experiences for our users.
+            </motion.p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {teamMembers.map((member) => (
+              <TeamMemberCard key={member.id} member={member} />
+            ))}
+          </div>
+        </section>
+        
+        {/* Contact Section */}
+        <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600 mb-4"
+              >
+                Get In Touch
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.1 }}
+                className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              >
+                Have a question or want to work together? We'd love to hear from you.
+              </motion.p>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {/* Contact Information */}
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold">Contact Information</h3>
+                  <p className="text-muted-foreground">
+                    Feel free to reach out to us through any of these channels.
+                  </p>
+                </div>
+                
+                <div className="space-y-6">
+                  {contactInfo.map((item, index) => (
+                    <motion.a
+                      key={index}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 group"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ delay: 0.1 * index }}
+                    >
+                      <div className="p-2 bg-background rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{item.title}</h4>
+                        <p className="text-muted-foreground group-hover:text-foreground transition-colors">
+                          {item.description}
+                        </p>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+                
+                <div className="pt-4">
+                  <h4 className="text-sm font-medium text-muted-foreground mb-3">Follow Us</h4>
+                  <div className="flex gap-4">
+                    {socialLinks.map((social, index) => (
+                      <motion.a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`p-2 rounded-full bg-background shadow-sm hover:shadow-md transition-all ${social.color}`}
+                        whileHover={{ y: -2 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: 0.1 * index }}
+                      >
+                        {social.icon}
+                        <span className="sr-only">{social.name}</span>
+                      </motion.a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Contact Form */}
+              <div className="lg:col-span-2">
+                <Card className="p-6 md:p-8 bg-background/80 backdrop-blur-sm">
+                  <ContactForm />
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  socials?: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+  };
+};
+
+// Office hours data
+const officeHours: OfficeHours[] = [
+  { day: 'Monday', hours: '9:00 AM - 5:00 PM', isOpen: true },
+  { day: 'Tuesday', hours: '9:00 AM - 5:00 PM', isOpen: true },
+  { day: 'Wednesday', hours: '9:00 AM - 5:00 PM', isOpen: true },
+  { day: 'Thursday', hours: '9:00 AM - 5:00 PM', isOpen: true },
+  { day: 'Friday', hours: '9:00 AM - 5:00 PM', isOpen: true },
+  { day: 'Saturday', hours: 'Closed', isOpen: false },
+  { day: 'Sunday', hours: 'Closed', isOpen: false },
+];
+
+// Contact information
+const contactInfo = [
+  {
+    icon: <Mail className="w-6 h-6 text-primary" />,
+    title: 'Email Us',
+    description: 'contact@example.com',
+    href: 'mailto:contact@example.com'
+  },
+  {
+    icon: <Phone className="w-6 h-6 text-primary" />,
+    title: 'Call Us',
+    description: '+1 (555) 123-4567',
+    href: 'tel:+15551234567'
+  },
+  {
+    icon: <MapPin className="w-6 h-6 text-primary" />,
+    title: 'Visit Us',
+    description: '123 Business St, City, Country',
+    href: 'https://maps.google.com'
+  },
+  {
+    icon: <Clock className="w-6 h-6 text-primary" />,
+    title: 'Working Hours',
+    description: 'Mon-Fri: 9:00 AM - 5:00 PM',
+    href: '#office-hours'
+  }
+];
+
+// Social media links
+const socialLinks = [
+  {
+    icon: <Twitter className="w-5 h-5" />,
+    name: 'Twitter',
+    href: 'https://twitter.com/example',
+    color: 'hover:text-blue-400'
+  },
+  {
+    icon: <Linkedin className="w-5 h-5" />,
+    name: 'LinkedIn',
+    href: 'https://linkedin.com/company/example',
+    color: 'hover:text-blue-600'
+  },
+  {
+    icon: <Instagram className="w-5 h-5" />,
+    name: 'Instagram',
+    href: 'https://instagram.com/example',
+    color: 'hover:text-pink-500'
+  },
+  {
+    icon: <Github className="w-5 h-5" />,
+    name: 'GitHub',
+    href: 'https://github.com/example',
+    color: 'hover:text-foreground'
+  }
+];
+
+// Particle Background Component
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 0.8;
+    
+    // Particle class
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      color: string;
+      
+      constructor() {
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = `rgba(99, 102, 241, ${Math.random() * 0.5 + 0.1})`;
+      }
+      
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (this.x < 0 || this.x > canvas!.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas!.height) this.speedY *= -1;
+      }
+      
+      draw() {
+        ctx!.fillStyle = this.color;
+        ctx!.beginPath();
+        ctx!.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+    }
+    
+    // Create particles
+    const particles: Particle[] = [];
+    const particleCount = Math.floor(window.innerWidth / 10);
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+    
+    // Animation loop
+    let animationId: number;
+    
+    const animate = () => {
+      ctx!.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw particles
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      // Connect particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 100) {
+            ctx!.beginPath();
+            ctx!.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 100})`;
+            ctx!.lineWidth = 0.5;
+            ctx!.moveTo(particles[i].x, particles[i].y);
+            ctx!.lineTo(particles[j].x, particles[j].y);
+            ctx!.stroke();
+          }
+        }
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    // Start animation
+    animate();
+    
+    // Handle window resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight * 0.8;
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  return (
+    <canvas 
+      ref={canvasRef}
+      className="fixed inset-0 w-full h-[80vh] -z-10 opacity-30"
+    />
+  );
+};
+
+// Scroll Down Indicator Component
+const ScrollDownIndicator = () => {
+  return (
+    <motion.div 
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: [0, 1, 1, 0],
+        y: [20, 0, 0, -20]
+      }}
+      transition={{ 
+        duration: 2,
+        repeat: Infinity,
+        repeatDelay: 1,
+        ease: "easeInOut"
+      }}
+    >
+      <span className="text-sm text-muted-foreground mb-2">Scroll Down</span>
+      <motion.div
+        animate={{
+          y: [0, 10, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "easeInOut"
+        }}
+      >
+        <ChevronDown className="h-6 w-6 text-muted-foreground" />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Particle Background Component
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 0.8;
+    
+    // Particle class
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      color: string;
+      
+      constructor() {
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = `rgba(99, 102, 241, ${Math.random() * 0.5 + 0.1})`;
+      }
+      
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (this.x < 0 || this.x > canvas!.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas!.height) this.speedY *= -1;
+      }
+      
+      draw() {
+        if (!ctx) return;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    
+    // Create particles
+    const particles: Particle[] = [];
+    const particleCount = window.innerWidth < 768 ? 30 : 60;
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+    
+    // Animation loop
+    let animationId: number;
+    const animate = () => {
+      if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Update and draw particles
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+          
+          // Connect particles
+          for (let j = i; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 100) {
+              ctx.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 100})`;
+              ctx.lineWidth = 0.5;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    // Handle window resize
+    const handleResize = () => {
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight * 0.8;
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="absolute inset-0 w-full h-full opacity-20"
+      aria-hidden="true"
+    />
+  );
+};
+
+// Scroll Down Indicator Component
+const ScrollDownIndicator = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
+  
+  return (
+    <motion.div 
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: isInView ? 1 : 0,
+        y: isInView ? 0 : 20
+      }}
+      transition={{ delay: 1, duration: 0.5 }}
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center"
+    >
+      <span className="text-sm text-muted-foreground mb-2">Scroll to explore</span>
+      <motion.div
+        animate={{
+          y: [0, 10, 0],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          repeatType: "loop",
+        }}
+      >
+        <ChevronDown className="h-6 w-6 text-primary" />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const Team = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formValues = Object.fromEntries(formData.entries());
+    
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('https://api.socialsync.com/contact', {
+        method: 'POST',
+      });
+      
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    } catch (error) {
+      toast.error('Something went wrong!', {
+        description: 'Please try again later.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen pt-16 bg-gradient-to-b from-background to-background/95">
+      {/* Team Grid */}
+      <section className="relative py-20 sm:py-24 lg:py-32 overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -right-20 -top-20 w-[40vw] h-[40vw] max-w-2xl max-h-2xl bg-gradient-to-br from-primary/5 to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float" />
+          <div className="absolute -left-20 -bottom-20 w-[50vw] h-[50vw] max-w-2xl max-h-2xl bg-gradient-to-tr from-accent/5 via-transparent to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-2000" style={{ animationDuration: '25s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-3xl max-h-3xl bg-gradient-to-r from-secondary/5 via-transparent to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-4000" style={{ animationDuration: '30s' }} />
+          <div className="absolute inset-0 bg-grid-white/5 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <motion.div 
+            className="text-center max-w-4xl mx-auto mb-16 lg:mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.span 
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary bg-primary/10 px-4 py-2 rounded-full mb-4 border border-primary/20 backdrop-blur-sm"
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <Sparkles className="h-4 w-4" />
+              Meet Our Team
+            </motion.span>
+            <motion.h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-5 bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              Meet Our <span className="bg-gradient-to-r from-primary to-accent bg-clip-text">Expert</span> Team
+            </motion.h2>
+            <motion.p 
+              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              A diverse team of experts passionate about creating exceptional digital experiences that make an impact.
+            </motion.p>
+          </motion.div>
+
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-10 px-4 sm:px-6 lg:px-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, staggerChildren: 0.1, delayChildren: 0.2 }}
+          >
+            {teamMembers.map((member, index) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  transition: { 
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                    delay: index * 0.08
+                  }
+                }}
+                whileHover={{ 
+                  y: -8,
+                  transition: { 
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15
+                  }
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="group relative"
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-all duration-300 group-hover:duration-500" />
+                <TeamMemberCard member={member} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="relative py-20 sm:py-24 lg:py-32 overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -right-20 top-1/4 w-[40vw] h-[40vw] max-w-2xl max-h-2xl bg-gradient-to-bl from-primary/5 via-transparent to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float" style={{ animationDuration: '25s' }} />
+          <div className="absolute -left-20 bottom-1/4 w-[50vw] h-[50vw] max-w-2xl max-h-2xl bg-gradient-to-tr from-accent/5 via-transparent to-transparent rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-2000" style={{ animationDuration: '30s' }} />
+          <div className="absolute inset-0 bg-grid-white/5 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/80" />
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <motion.div 
+            className="text-center max-w-4xl mx-auto mb-16 lg:mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.span 
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary bg-primary/10 px-4 py-2 rounded-full mb-4 border border-primary/20 backdrop-blur-sm"
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <MessageSquareText className="h-4 w-4" />
+              Get In Touch
+            </motion.span>
+            <motion.h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-5 bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              Let's <span className="bg-gradient-to-r from-primary to-accent bg-clip-text">Work Together</span>
+            </motion.h2>
+            <motion.p 
+              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              Have questions or want to discuss a project? Our team is here to help you bring your ideas to life.
+            </motion.p>
+          </motion.div>
+          <div className="relative max-w-3xl mx-auto bg-background/80 backdrop-blur-xl border border-border/30 rounded-3xl p-8 sm:p-10 lg:p-12 shadow-2xl overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full filter blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/10 rounded-full filter blur-3xl" />
+            <div className="relative z-10">
+              <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/90">
+                Send us a message
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <motion.div
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1, duration: 0.5 }}
+                  >
+                    <Label htmlFor="first-name" className="text-muted-foreground mb-1.5 block">First Name</Label>
+                    <Input
+                      id="first-name"
+                      placeholder="John"
+                      value={formData.firstName}
+                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                      className="bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200"
+                      required
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                  >
+                    <Label htmlFor="last-name" className="text-muted-foreground mb-1.5 block">Last Name</Label>
+                    <Input
+                      id="last-name"
+                      placeholder="Doe"
+                      value={formData.lastName}
+                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      className="bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200"
+                      required
+                    />
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  <Label htmlFor="email" className="text-muted-foreground mb-1.5 block">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  <Label htmlFor="phone" className="text-muted-foreground mb-1.5 block">Phone Number (Optional)</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+1 (555) 123-4567"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200"
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                >
+                  <Label htmlFor="message" className="text-muted-foreground mb-1.5 block">Message</Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Tell us about your project..."
+                    className="min-h-[140px] bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    required
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="pt-2"
+                >
+                  <Button
+                    type="submit"
+                    className="w-full h-12 text-base font-medium relative overflow-hidden group"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <span className="relative z-10">Send Message</span>
+                        <span className="absolute inset-0 w-0 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full"></span>
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
+              </form>
+            </div>
+          </div>
+
+          {/* Contact Info */}
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <motion.div
+              className="relative bg-background/80 backdrop-blur-xl border border-border/30 rounded-3xl p-8 hover:border-primary/30 transition-colors group"
+              whileHover={{ y: -5 }}
+            >
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/10 rounded-full filter blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-semibold mb-6">
+                Contact Information
+              </h3>
+              <div className="space-y-5">
+                {[
+                  {
+                    icon: <Mail className="h-5 w-5" />,
+                    title: 'Email',
+                    content: 'contact@socialsync.com',
+                    href: 'mailto:contact@socialsync.com'
+                  },
+                  {
+                    icon: <Phone className="h-5 w-5" />,
+                    title: 'Phone',
+                    content: '+1 (123) 456-7890',
+                    href: 'tel:+11234567890'
+                  },
+                  {
+                    icon: <MapPin className="h-5 w-5" />,
+                    title: 'Location',
+                    content: '123 Business Ave, Suite 100\nSan Francisco, CA 94107'
+                  }
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    className="flex items-start space-x-4"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ 
+                      opacity: 1, 
+                      x: 0,
+                      transition: { delay: 0.5 + (i * 0.1) }
+                    }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg text-primary">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">
+                        {item.title}
+                      </p>
+                      {item.href ? (
+                        <a 
+                          href={item.href} 
+                          className="text-foreground hover:text-primary transition-colors"
+                        >
+                          {item.content}
+                        </a>
+                      ) : (
+                        <p className="text-foreground whitespace-pre-line">
+                          {item.content}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="relative bg-background/80 backdrop-blur-xl border border-border/30 rounded-3xl p-8 hover:border-primary/30 transition-colors group"
+              whileHover={{ y: -5 }}
+            >
+              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-accent/10 rounded-full filter blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-semibold mb-6">
+                Office Hours
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { day: 'Monday - Friday', hours: '9:00 AM - 6:00 PM' },
+                  { day: 'Saturday', hours: '10:00 AM - 4:00 PM' },
+                  { day: 'Sunday', hours: 'Closed' }
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    className="flex justify-between items-center p-4 bg-background/50 rounded-xl"
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ 
+                      opacity: 1, 
+                      x: 0,
+                      transition: { 
+                        delay: 0.7 + (i * 0.1),
+                        type: 'spring',
+                        stiffness: 100
+                      }
+                    }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <span className="text-foreground">{item.day}</span>
+                    <span className="font-medium text-primary">{item.hours}</span>
+                  </motion.div>
+                ))}
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-border/30">
+                <h4 className="text-sm font-medium text-muted-foreground mb-4">Follow Us</h4>
+                <div className="flex items-center space-x-3">
+                  {[
+                    { 
+                      icon: <Twitter className="h-5 w-5" />, 
+                      href: '#',
+                      label: 'Twitter'
+                    },
+                    { 
+                      icon: <Linkedin className="h-5 w-5" />, 
+                      href: '#',
+                      label: 'LinkedIn'
+                    },
+                    { 
+                      icon: <Instagram className="h-5 w-5" />, 
+                      href: '#',
+                      label: 'Instagram'
+                    },
+                    { 
+                      icon: <Github className="h-5 w-5" />, 
+                      href: '#',
+                      label: 'GitHub'
+                    },
+                  ].map((social, i) => (
+                    <motion.a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center h-10 w-10 rounded-full bg-background/50 border border-border/30 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                      whileHover={{ y: -2, scale: 1.05 }}
+                      aria-label={social.label}
+                    >
+                      {social.icon}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Team Member Card Component with 3D Tilt Effect
+const TeamMemberCard = ({ member }: { member: typeof teamMembers[0] }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  // 3D Tilt Effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!cardRef.current) return;
+      
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateY = ((x - centerX) / 20);
+      const rotateX = ((centerY - y) / 20);
+      
+      cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+    
+    const handleMouseLeave = () => {
+      if (cardRef.current) {
+        cardRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      }
+    };
+    
+    const card = cardRef.current;
+    if (card) {
+      card.addEventListener('mousemove', handleMouseMove);
+      card.addEventListener('mouseleave', handleMouseLeave);
+    }
+    
+    return () => {
+      if (card) {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
+  
+  return (
+    <motion.div
+      variants={{
+        hidden: { y: 40, opacity: 0 },
+        visible: {
+          y: 0,
+          opacity: 1,
+          transition: {
+            type: 'spring',
+            stiffness: 100,
+            damping: 15
+          }
+        }
+      }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="h-full"
+    >
+      <Card 
+        ref={cardRef}
+        className="h-full overflow-hidden border border-border/30 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 group/card"
+      >
+        {/* Card Header with Gradient */}
+        <div className="h-2 bg-gradient-to-r from-primary to-accent" />
+        
+        <div className="p-6">
+          <div className="flex flex-col items-center text-center">
+            {/* Avatar with Glow Effect */}
+            <div className="relative mb-5 group-hover/card:scale-105 transition-transform duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-md -z-10 group-hover/card:opacity-100 opacity-0 transition-opacity duration-500" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 -z-10 animate-pulse" />
+              <Avatar className="h-24 w-24 border-4 border-background">
+                <AvatarImage src={member.image} alt={member.name} />
+                <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-primary/10 to-accent/10">
+                  {member.name.split(' ').map(n => n[0]).join('')}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            
+            {/* Name and Title */}
+            <h3 className="text-xl font-bold mb-1">{member.name}</h3>
+            <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
+            
+            {/* Social Links */}
+            <div className="flex space-x-2 mb-4">
+              {member.socials.map((social, i) => (
+                <motion.a
+                  key={i}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-background/50 hover:bg-background/80 transition-colors text-muted-foreground hover:text-foreground"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={`${member.name}'s ${social.name}`}
+                >
+                  {social.icon}
+                </motion.a>
+              ))}
+            </div>
+            
+            {/* Bio */}
+            <p className="text-sm text-muted-foreground mb-6">{member.bio}</p>
+            
+            {/* Skills */}
+            <div className="w-full">
+              <h4 className="text-xs font-semibold text-muted-foreground mb-3 uppercase tracking-wider">Skills</h4>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {member.skills.map((skill, i) => (
+                  <motion.span
+                    key={i}
+                    className="px-3 py-1 text-xs rounded-full bg-background/50 border border-border/30 text-foreground/80"
+                    initial={{ opacity: 0, y: 5 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 * i }}
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  );
+};
+
+export default Team;
+                      },
+                      { 
+                        icon: <Github className="h-5 w-5" />, 
+                        href: '#',
+                        label: 'GitHub'
+                      },
+                    ].map((social, i) => (
+                      <motion.a
+                        key={i}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center h-10 w-10 rounded-full bg-background/50 border border-border/30 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                        whileHover={{ y: -2, scale: 1.05 }}
+                        aria-label={social.label}
+                      >
+                        {social.icon}
+                      </motion.a>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Team Member Card Component with 3D Tilt Effect
+const TeamMemberCard = ({ member }: { member: typeof teamMembers[0] }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  // 3D Tilt Effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!cardRef.current) return;
+      
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateY = ((x - centerX) / 20);
+      const rotateX = ((centerY - y) / 20);
+      
+      cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+    
+    const handleMouseLeave = () => {
+      if (cardRef.current) {
+        cardRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      }
+    };
+    
+    const card = cardRef.current;
+    if (card) {
+      card.addEventListener('mousemove', handleMouseMove);
+      card.addEventListener('mouseleave', handleMouseLeave);
+    }
+    
+    return () => {
+      if (card) {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
+  
+  return (
+    <motion.div
+      variants={{
+        hidden: { y: 40, opacity: 0 },
+        visible: {
+          y: 0,
+          opacity: 1,
+          transition: { 
+            type: 'spring',
+            stiffness: 100,
+            damping: 15
+          }
+        }
+      }}
+      whileHover={{ 
+        y: -10,
+        transition: { 
+          type: 'spring',
+          stiffness: 300,
+          damping: 15
+        } 
+      }}
+      className="h-full"
+    >
+      <Card 
+        ref={cardRef}
+        className="h-full overflow-hidden border border-border/30 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 group/card"
+      >
+        {/* Card Header with Gradient */}
+        <div className="h-2 bg-gradient-to-r from-primary to-accent" />
+        
+        <div className="p-6">
+          <div className="flex flex-col items-center text-center">
+            {/* Avatar with Glow Effect */}
+            <div className="relative mb-5 group-hover/card:scale-105 transition-transform duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-md -z-10 group-hover/card:opacity-100 opacity-0 transition-opacity duration-500" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 -z-10 animate-pulse" />
+              
+              <Avatar className="w-24 h-24 border-4 border-background shadow-lg group-hover/card:shadow-primary/20 transition-all duration-500">
+                <AvatarImage src={member.avatar} alt={member.name} className="object-cover" />
+                <AvatarFallback className="text-xl font-bold bg-gradient-to-br from-primary to-accent text-white">
+                  {member.name.split(' ').map(n => n[0]).join('')}
+                </AvatarFallback>
+              </Avatar>
+              
+              {/* Online Status Indicator */}
+              <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-background" />
+            </div>
+            
+            {/* Name and Role */}
+            <h3 className="text-xl font-semibold text-foreground mb-1.5 group-hover/card:text-primary transition-colors duration-300">
+              {member.name}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              {member.role}
+            </p>
+            
+            {/* Expertise Chips */}
+            <div className="flex flex-wrap justify-center gap-2 mb-5">
+              {member.expertise.slice(0, 2).map((skill, idx) => (
+                <span 
+                  key={idx}
+                  className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground group-hover/card:bg-primary/10 group-hover/card:text-primary transition-colors duration-300"
+                >
+                  {skill}
+                </span>
+              ))}
+              {member.expertise.length > 2 && (
+                <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">
+                  +{member.expertise.length - 2}
+                </span>
+              )}
+            </div>
+            
+            {/* Social Links */}
+            <div className="flex space-x-3 mb-5">
+              <motion.a 
+                href={member.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, scale: 1.1 }}
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all duration-300"
+                aria-label={`${member.name}'s LinkedIn`}
+              >
+                <Linkedin className="h-4 w-4" />
+              </motion.a>
+              {member.portfolio && (
+                <motion.a 
+                  href={member.portfolio} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -3, scale: 1.1 }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all duration-300"
+                  aria-label={`${member.name}'s Website`}
+                >
+                  <Globe className="h-4 w-4" />
+                </motion.a>
+              )}
+            </div>
+            
+            {/* Contact Button */}
+            <motion.div 
+              className="w-full"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <a 
+                href={`tel:${member.contact.replace(/\s+/g, '')}`}
+                className="block w-full"
+              >
+                <Button 
+                  variant="outline" 
+                  className="w-full rounded-xl border-primary/30 text-primary dark:text-foreground hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group/button relative overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center justify-center">
+                    <span className="group-hover/button:translate-x-1 transition-transform duration-300 text-foreground dark:text-inherit">
+                      {member.contact}
+                    </span>
+                    <Phone className="ml-2 h-4 w-4 opacity-0 -translate-x-2 group-hover/button:opacity-100 group-hover/button:translate-x-0 transition-all duration-300" />
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover/button:opacity-100 transition-opacity duration-300" />
+                </Button>
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  );
+};
+
+export default Team;
