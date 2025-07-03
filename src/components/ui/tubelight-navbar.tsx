@@ -23,6 +23,13 @@ export function TubelightNavBar({ items, className }: NavBarProps) {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    const currentItem = items.find(item => item.url === location.pathname)
+    if (currentItem) {
+      setActiveTab(currentItem.name)
+    }
+  }, [location.pathname, items])
+
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
@@ -31,13 +38,6 @@ export function TubelightNavBar({ items, className }: NavBarProps) {
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
-
-  useEffect(() => {
-    const currentItem = items.find(item => item.url === location.pathname)
-    if (currentItem) {
-      setActiveTab(currentItem.name)
-    }
-  }, [location.pathname, items])
 
   return (
     <div

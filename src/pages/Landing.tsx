@@ -375,6 +375,18 @@ const Landing = () => {
               {
                 question: "Do you offer ongoing support?",
                 answer: "Yes, we provide comprehensive support and maintenance packages to ensure your digital assets continue to perform at their best."
+              },
+              {
+                question: "How long does a typical project take?",
+                answer: "Project timelines vary based on scope and complexity. A basic website might take 2-4 weeks, while comprehensive social media strategies could span several months. We provide detailed timelines during consultation."
+              },
+              {
+                question: "Can you help with content creation?",
+                answer: "Absolutely! We offer content creation services including copywriting, graphic design, and video production to ensure your social media and website content is engaging and professional."
+              },
+              {
+                question: "What is your pricing structure?",
+                answer: "Our pricing is tailored to each project based on your specific needs. We offer both project-based and retainer options. Contact us for a personalized quote after discussing your requirements."
               }
             ].map((faq, index) => (
               <motion.div 
