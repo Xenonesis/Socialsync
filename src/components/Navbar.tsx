@@ -1,21 +1,17 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Building2, Users, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Home, Building2, Users } from 'lucide-react';
 import { TubelightNavBar } from '@/components/ui/tubelight-navbar';
-import { ThemeToggle } from '@/components/theme-toggle';
+import NavbarLogo from './NavbarLogo';
+import NavbarLinks from './NavbarLinks';
+import NavbarActions from './NavbarActions';
 
 const Navbar = () => {
-  const location = useLocation();
-
   const navItems = [
     { name: 'Home', url: '/', icon: Home },
     { name: 'Businesses', url: '/businesses', icon: Building2 },
     { name: 'Team & Contact', url: '/team', icon: Users },
   ];
-
-  const isActive = (path: string) => location.pathname === path;
 
   return (
     <>
@@ -27,65 +23,9 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex items-center space-x-3">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="w-10 h-10 rounded-xl overflow-hidden"
-              >
-                <img src="/logo.jpg" alt="Social Sync" className="w-full h-full object-cover" />
-              </motion.div>
-              <span className="text-xl sm:text-2xl font-bold text-foreground">Social Sync</span>
-            </Link>
-
-            <div className="hidden md:flex items-center space-x-10">
-              {navItems.map((item) => (
-                <Link
-                  key={item.url}
-                  to={item.url}
-                  className={`relative text-sm font-medium transition-all duration-200 ${
-                    isActive(item.url) 
-                      ? 'text-foreground' 
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {item.name}
-                  {isActive(item.url) && (
-                    <motion.div
-                      layoutId="navbar-indicator"
-                      className="absolute -bottom-2 left-0 right-0 h-0.5 rounded-full"
-                      style={{ background: 'hsl(var(--warm-accent))' }}
-                    />
-                  )}
-                </Link>
-              ))}
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <ThemeToggle />
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button 
-                  variant="default" 
-                  size="sm" 
-                  className="bg-primary text-primary-foreground hover:bg-primary-hover rounded-full px-6 py-2 font-medium transition-all duration-200"
-                  asChild
-                >
-                  <Link to="/team" className="flex items-center space-x-2">
-                    <span>Get Started</span>
-                    <svg 
-                      width="16" 
-                      height="16" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2"
-                      className="ml-1"
-                    >
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </Link>
-                </Button>
-              </motion.div>
-            </div>
+            <NavbarLogo />
+            <NavbarLinks />
+            <NavbarActions />
           </div>
         </div>
       </motion.nav>
@@ -103,16 +43,8 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center space-x-3">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="w-8 h-8 rounded-xl overflow-hidden"
-              >
-                <img src="/logo.jpg" alt="Social Sync" className="w-full h-full object-cover" />
-              </motion.div>
-              <span className="text-lg sm:text-xl font-bold text-foreground">Social Sync</span>
-            </Link>
-            <ThemeToggle />
+            <NavbarLogo isMobile={true} />
+            <NavbarActions />
           </div>
         </div>
       </motion.nav>
